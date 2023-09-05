@@ -1,0 +1,3 @@
+Consumer vs BiConsumer
+BiConsumer is a functional interface, has one abstract method i.e accept(), similar to a Consumer Interface. The difference between consumer and 
+BiConsumer is Consumer interface accepts single parameter where as BiConsumer accepts two input parameters, and both doesn't return anything.

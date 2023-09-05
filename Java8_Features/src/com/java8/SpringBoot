@@ -1,0 +1,62 @@
+@Component -> This is universal stereotype spring annotation. From spring 2.5 they have shifted xml to annotation based configuration.What is the purpose of stereotype annotation.As we know there
+is Dependency Injection. @Component is used to register a class in Spring container(ApplicationContext container) where ever you find this it means you are saying to register this class
+in Spring container.
+@Component @Repository @Service @Controller
+These all going to register the bean to container
+but if you want to do some specifically functionality then like
+if we annotate any class with @Controller there it will do request mapping as dispatcher servlet.@Component will not do searching the url and mapping but
+@Controller and @Component  both will register bean to Spring container.
+If we exchange @Component and @Service then it will not effect anything because we are writing Logic inside it.
+@Repository do database connection and operation which throw database related exception but if we annotate it with @component then it will not throw exceptions. 
+
+
+@RestController
+It is a combination of two annotation
+1.@Controller
+2.@ResponseBody
+
+@Controller
+->It is a class level annotation. It marks a class as a web request handler. It is often used to serve web pages. By default, it returns a String 
+that indicates which route to redirect. It is mostly used with @RequestMapping annotation.
+
+@ResponseBody
+->It binds method return value to the response body. It tells spring boot framework to serialize a return object into json or xml format.
+
+Two types of IOC container
+1.org.springframework.bean.factory.BeanFactory
+2.org.springframework.context.ApplicationContext
+
+IOC - 
+In Spring framework, IOC container is responsible to inject the dependencies. We provide metadata to IOC container either by xml file or annotation.
+The IOC container is responsible to instantiate, configure and assemble the objects.
+
+Bean Factory
+Spring Bean Factory is the simplest container which provides basic support to DI.
+It is defined by org.springframework.beans.factory.BeanFactory interface.
+There are many implementation of BeanFactory interface. The most commonly used BeanFactory implementation is
+	  org.springframework.beans.factory.xml.XmlBeanFactory
+	  Example-
+	  Resource resource = new ClassPathResource("Bean.xml");
+	  BeanFactory factory = new XmlBeanFactory(resource);
+The Resource interface has many implementations. Two mainly are-
+1.org.springframework.core.io.FileSystemResource : Loads the resource from underlying file system.
+	Example- 
+	BeanFactory bfObj = new XmlBeanFactory(new FileSystemResource("C:/beansconfig.xml"));
+	
+2.org.springframework.core.io.ClassPathResource: Loads the resource from classpath.
+
+ApplicationContext
+The AppllicationContext container is Spring's advanced container.
+It is defined by org.springframework.context.ApplicationContext interface.
+The AppllicationContext interface is built on top of the BeanFactory interface.
+It adds some extra functionality than BeanFactory such as simple integration with Spring's AOP, message resource handling(for |18N), event propogation etc.
+There are many implementations of AppllicationContext interface. The most commonly used ApplicationContext implementation is-
+	org.springframework.context.support.classPathXmlApplicationContext
+	Example-
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+
+Annotation-Config 
+The <context:annotation-config> annotation is mainly used to activate the dependency injection annotations. @Autowired, @Qualifier, @PostConstruct, @PreDestroy, and @Resource are some of the ones that <context:annotation-config> can resolve.
+
+@Resource will narrow down the search first by name then by type and finally by Qualifiers (ignored if match is found by name).
+The @Resource annotation is used to identify a class, field, or method that upon initialization, the resource will be injected. For a class-based @Resource, the "resource is looked up by the application at runtime".

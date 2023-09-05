@@ -1,0 +1,38 @@
+SQL Query
+LIMIT keyword
+Select student_id, name from Student LIMIT 3(This query will print top 3 records)
+Select * from Student LIMIT 1,5 (This query will show 2,3,4,5 but will leave 0 index which has 1, It will start from 1 index.)
+
+Select max(salary) from Employee where salary NOT IN (Select max(salary) from Employee)  - (Second Highest salary from Employee)
+
+Select Top 5 * from Employee - (Query will print top five data from table.)
+
+Select min(salary) from (Select distinct salary from Employee order by salary desc where rownum < 3 )
+
+Select distinct salary from Employee order by salary desc - This query is running first in above example
+Salary
+40000
+30000
+20000
+10000
+For above run command 
+Select distinct salary from Employee order by salary desc where rownum < 4 (this will run first and will get answer like below)
+Result
+Salary
+40000
+30000
+20000
+Now first query will run Select min(salary)
+Salary
+20000
+
+Normalization - It divides larger table into smaller tables and links them using relationship.
+
+
+Select department,count(department) from Employee group by department;
+Select department from Employee group by department having count(*) < 2 ;
+
+Select employee_name from Employee,Department where Employee.employee_no = Department.employee_no ;
+
+Select employee_no,employee_name,department_name from Employee left outer join (Employee.department_no=Department.department_name);
+

@@ -1,0 +1,436 @@
+why multiple inheritance is not supported in java
+The reason behind this is to prevent ambiguity. Consider a case where class B extends class A and Class C and both class A and C have the same method display(). Now java compiler cannot decide,
+ which display method it should inherit. To prevent such situation, multiple inheritances is not allowed in java.
+
+                                   Basically Java can Categories into Three parts:
+
+Java SE (Core Java or Java Core)
+Java EE (Advance Java)
+Java ME (Mobile Development with Java)
+1. Java SE (Core Java) : Java SE is used for Developing Standalone application Or System Software that Run on System only. In The Java SE you can Learn the
+ Basic of Java Like: 
+Inheritance, Polymorphism, Strings etc.
+
+2. Java EE (Advance Java) : Java EE is used for developing Web Applications that Run with the help of Web Browser. In Java EE you can Learn the Advance topics
+ Like: Servlet, Java Server pages(JSP), Enterprise Java Beans(EJB) etc.
+
+3. Java ME (Mobile Development with Java) : Java ME is used for Developing Mobile Application That Run on The Mobile Phones. In The Java ME basically you Learn 
+about Android App Development.
+
+                                        <------------ HashMap-------------------------->
+
+If we create a HashMap then HashMap creates an array of buckets whose size will be 16.Each bucket is here called node and its a LinkedList.
+Array of LinkedList is called HashMap.
+
+Suppose now we are putting some values in Map with the help of 'put' method which will take key,value pair.Then according to 'Hashcode' of key,it is going to be 
+inserted.
+Just to get the index in which it is going to be inserted an internal calculation is done. 
+Index=Hash&(n-1).
+Suppose we got 4 as Index then a LinkedList will be created at node 4(index)
+
+|_|0
+|_|1
+|_|2
+|_|3        _______________
+|_|4  ----  |___|___|__|__| In this first column will contain Hashcode and second will have Key and third will have value and fourth will have null.
+|_|5       _________        _________
+|_|6  ---- |_|_|_|_| -----> |_|_|_|_|   
+|_|7
+|_|8
+|_|9
+|_|10
+|_|11
+|_|12
+|_|13
+|_|14
+|_|15
+Suppose
+-> for sometime Hashcode collision is done that two keys having same Hashcode,then both will have same index or bucket number but two LinkedList
+will be there as we can see in Index or Bucket number 6.And the first LinkedList last column will point towards the Second LinkedList of bucket 6. 
+Note-> When the key is null in HashMap then it goes into 0th index or bucket. HashMap , allows storing one null key and multiple null values.
+ The reason for allowing only one null key is because keys in a HashMap has to be unique. On the other hand Hashtable does not allow null keys.
+It uses an array and LinkedList data structure internally for storing Key and Value. There are four fields in HashMap. Before understanding the
+ internal working of HashMap, you must be aware of hashCode() and equals() method.
+ The HashMap implementation is based on a hash table data-structure: Hash table based implementation of the Map interface. If a thread-safe
+ implementation is not needed, it is recommended to use HashMap in place of Hashtable.
+Hashtable does not accept null key or null value.
+Hashtable is synchronised but HashMap is not synchronised.
+
+HashMap inserts key,value pair randomly on the basis of Hashcode of Key.
+**How does a Java HashMap handle different objects with the same hash code?
+It is perfectly legal for two objects to have the same hashcode.
+If two objects are equal (using the equals() method) then they have the same hashcode.
+If two objects are not equal then they cannot have the same hashcode.
+
+Both HashMap and HashTable implements the Map interface, a sub interface of the Collection interface. A Map stores key-value pairs where duplicate
+ keys are not allowed.
+
+HashMap extends the AbstractMap class and implements the Map interface. On the other hand, Hashtable inherits the Dictionary class and also implements the Map 
+interface.
+As both Hashtable and HashMap implements Map, they are similar as both stores key-value pairs where the keys are unique and stored as hash values. To store an element 
+in a Hashtable or HashMap, you need to specify a key object and its associated value. The key is then hashed, and the resulting hash code is used as the index at
+ which the value is stored within the table.
+HashMap vs Hashtable
+The primary difference between HashMap and Hashtable is that HashMap is not thread-safe, and therefore cannot be shared between multiple threads 
+without external synchronization. On the other hand, Hashtable is thread safe, and therefore can be shared between multiple threads.
+Some other key differences are:
+Because of synchronization and thread safety, Hashtable is much slower than HashMap if used in single threaded environment.
+HashMap allows one null key and multiple null values whereas Hashtable doesnâ€™t allow null values.
+HashMap is traversed by Iterator while Hashtable can be traversed by both Iterator and the legacy Enumeration.
+Iterator in HashMap is a fail-fast iterator. It throws ConcurrentModificationException if any thread other than the iteratorâ€™s remove() method 
+tries to modify the map structurally. Thus, in the face of concurrent modification, the iterator fails fast and cleanly, rather than risking
+ undesirable behaviour. However, The Enumeration returned by Hashtable doesnâ€™t have this behaviour.
+In addition to these differences, one commonly asked question is Why HashMap stores one null key but Hashtable does not?
+*Important
+HashMap, allows storing one null key and multiple null values. The reason for allowing only one null key is because keys in a HashMap has to be 
+unique. On the other hand Hashtable does not allow null keys. This is because the objects used as keys in a Hashtable implements the hashCode() and
+equals() methods for their storage and retrieval. Since null is not an object it cannot implement the methods. If you try hashing a null key, it 
+will throw a NullPointerException.Hashtable is the older class, and its use is generally discouraged. Perhaps they saw the need for a null key, and 
+more importantly - null values, and added it in the HashMap implementation.
+
+HashMap is newer, and has more advanced capabilities, which are basically just an improvement on the Hashtable functionality. When HashMap was created, it was 
+specifically designed to handle null values as keys and handles them as a special case.
+From Hashtable JavaDoc we found:
+To successfully store and retrieve objects from a Hashtable, the objects used as keys must implement the hashCode method and the equals method.
+Since null isn't an object, you can't call .equals() or .hashCode() on it, so the Hashtable can't compute a hash to use it as a key.
+
+
+								   
+								   <---------------HashSet----------------->
+
+HashSet uses HashMap internally to store its objects. Whenever you create a HashSet object, one HashMap object associated with it is also created. This HashMap 
+object is used to store the elements you enter in the HashSet. The elements you add into HashSet are stored as keys of this HashMap object. The value associated 
+with those keys will be a constant.
+Every constructor of HashSet class internally creates one HashMap object. You can check this in the source code of HashSet class in JDK installation directory. 
+whenever we create a HashSet, it internally creates a HashMap and if we insert an element into this HashSet using add() method, it actually call put() method on 
+internally created HashMap object with element you have specified as its key and constant Object called PRESENT as its value. So we can say that a Set achieves 
+uniqueness internally through HashMap.
+As we know in a HashMap each key is unique and when we call put(Key, Value) method, it returns the previous value associated with key, or null if there was no
+mapping for key. So in add() method we check the return value of map.put(key, value) method with null value.
+
+If map.put(key, value) returns null, then the statement map.put(e, PRESENT) == null will return true and element is added to the HashSet(internally HashMap).
+If map.put(key, value) returns old value of the key, then the statement â€œmap.put(e, PRESENT) == null will return false and element is not added to the
+ HashSet(internally HashMap).
+ 
+ 
+ 
+                                    <-----------------Queue------------------>
+									
+Its working process is FIFO.
+Queue can be implemented by using Arrays and LinkedList.		
+Elements are added at Rear and removed from Front.
+                     ___________
+            Front<--|_|_|_|_|_|_|--->Rear
+			
+									<-------------Deque----------------->
+
+Its working process is FIFO & LIFO both.
+It is double ended queue.
+Deque can be implemented by using CircularArrays and DoublyLinkedList.		
+Elements are added at front and rear both and can be removed from Front and Rear both.
+                                     _______    
+			Front<------|_|_|_|_|---------->Rear
+
+
+
+
+
+
+                                        <------------Stack------------->
+Stack is a subclass of Vector that implements a standard last-in, first-out stack.
+
+Stack only defines the default constructor, which creates an empty stack. Stack includes all the methods defined by Vector, and adds several of its own.
+Method & Description
+1	
+boolean empty()
+
+Tests if this stack is empty. Returns true if the stack is empty, and returns false if the stack contains elements.
+
+2	
+Object peek( )
+
+Returns the element on the top of the stack, but does not remove it.
+
+3	
+Object pop( )
+
+Returns the element on the top of the stack, removing it in the process.
+
+4	
+Object push(Object element)
+
+Pushes the element onto the stack. Element is also returned.
+
+5	
+int search(Object element)
+
+Searches for element in the stack. If found, its offset from the top of the stack is returned. Otherwise, -1 is returned.
+Live Demo example-
+import java.util.*;
+public class StackDemo {
+
+   static void showpush(Stack st, int a) {
+      st.push(new Integer(a));
+      System.out.println("push(" + a + ")");
+      System.out.println("stack: " + st);
+   }
+
+   static void showpop(Stack st) {
+      System.out.print("pop -> ");
+      Integer a = (Integer) st.pop();
+      System.out.println(a);
+      System.out.println("stack: " + st);
+   }
+
+   public static void main(String args[]) {
+      Stack st = new Stack();
+      System.out.println("stack: " + st);
+      showpush(st, 42);
+      showpush(st, 66);
+      showpush(st, 99);
+      showpop(st);
+      showpop(st);
+      showpop(st);
+      try {
+         showpop(st);
+      } catch (EmptyStackException e) {
+         System.out.println("empty stack");
+      }
+   }
+}
+This will produce the following result âˆ’
+
+Output
+stack: [ ]
+push(42)
+stack: [42]
+push(66)
+stack: [42, 66]
+push(99)
+stack: [42, 66, 99]
+pop -> 99
+stack: [42, 66]
+pop -> 66
+stack: [42]
+pop -> 42
+stack: [ ]
+pop -> empty stack
+
+
+                                        <-----------Marker Interface----------->
+Marker Interface in Java is an interface that has no methods declarations or fields in it. It is used as a tag to let compiler know it needs to add some special
+behaviour to the class implementing marker interface.That is why marker interface is also known as tag interface in java.
+
+Some of the examples of marker interface in java are-
+java.lang.Cloneable
+java.io.serializable
+java.util.RandomAccess
+
+The main purpose of marker interfaces is to create special types where types themselves have no behaviour of their own.
+In some  cases the implementing class might only need to flag that it belongs to that particular type and some special behaviour should be added to it, how and what
+is handled by some other entity.
+Like in case of Serializable marker interface, classes that need to be serialized just implement serializable interface, now it is the task of ObjectOutputStream
+class to make sure that the classes that are implementing Serializable interface should be serialized properly.
+ 
+*Custom Marker Interface
+public interface MarkerEntity{
+   }
+---------
+public class Employee implements MarkerEntity{
+  } 
+---------
+public class MarkerEntityService{
+    public boolean save(Object object) throws InvalidEntityFoundException{
+		return new MarkerEntityDAO().save(object);
+	}
+}
+---------
+public class InvalidEntityFoundException extends Exception{
+		private static final long serialVersionUID = 8765432123456789098L;
+		public InvalidEntityFoundException(String message){
+						super(message);
+		}
+}
+---------
+public class MarkerEntityDAO{
+		public boolean save(Object object)  throws InvalidEntityFoundException{
+						boolean isSaved = false;
+						if(!(object instanceOf MarkerEntity)){
+							throw new InvalidEntityFoundException("Invalid Entity Found, can't be saved");			
+						}esle{
+						System.out.println("Object saved in Database");
+						isSaved = true;
+						}
+					return = isSaved;
+			}
+}
+--------------------------------------------
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Employee employee = new Employee();
+		try{
+			new MarkerEntityService().save(employee);
+		}
+		catch(InvalidEntityFoundException e)
+		{
+			e.printStackTrace();
+		}
+	}
+}
+
+*Important points about interface
+We canâ€™t create instance(interface canâ€™t be instantiated) of interface but we can make reference of it that refers to the Object of its implementing class.
+A class can implement more than one interface.
+An interface can extends another interface or interfaces (more than one interface) .
+A class that implements interface must implements all the methods in interface.
+All the methods are public and abstract. And all the fields are public, static, and final.
+It is used to achieve multiple inheritance.
+It is used to achieve loose coupling.
+Example-
+interface In1 
+{ 
+    final int a = 10; 
+    default void display() 
+    { 
+        System.out.println("hello"); 
+    } 
+} 
+  
+class TestClass implements In1 
+{ 
+    public static void main (String[] args) 
+    { 
+        TestClass t = new TestClass(); 
+        t.display(); 
+    } 
+} 
+
+Note:-
+A class which contains 0 or more abstract methods is known as abstract class. If it contains at least one abstract method, it must be declared abstract. Once you 
+declare a class abstract it indicates that the class is incomplete and, you cannot instantiate it.
+You cannot use an abstract class as a parameter type, a function return type, or the type of an explicit conversion, nor can you declare an object of an abstract 
+class. You can, however, declare pointers and references to an abstract class. Virtual member functions are inherited.
+A class that is declared using â€œabstractâ€� keyword is known as abstract class. It can have abstract methods(methods without body) as well as concrete methods
+ (regular methods with body). A normal class(non-abstract class) cannot have abstract methods.
+It's not necessary for an abstract class to have abstract method. We can mark a class as abstract even if it doesn't declare any abstract methods. If abstract 
+class doesn't have any method implementation, its better to use interface because java doesn't support multiple class inheritance.
+Yes, you can use the main method in abstract class. ... The abstract is applicable to the object so there is no problem if it contains the main method. In main
+ method, you can not create an instance of the abstract class but you can instantiate other concrete class.
+Yes! Abstract classes can have constructors! Yes, when we define a class to be an Abstract Class it cannot be instantiated but that does not mean an Abstract class 
+cannot have a constructor. Each abstract class must have a concrete subclass which will implement the abstract methods of that abstract class.
+An abstract class is a class that is declared abstract â€”it may or may not include abstract methods. Abstract classes cannot be instantiated, but they can be 
+subclassed. When an abstract class is subclassed, the subclass usually provides implementations for all of the abstract methods in its parent class.
+
+https://www.youtube.com/watch?v=Xy2PqCNgFig
+
+
+Comparator 
+comparator in java compares two different class objects provided.
+A comparator is present in the java.util package.
+Comparator doesn't affect the original class.
+Comparator provides compare() method,equals() method to sort elements.
+Example-
+public class Vehicle implements Comparator<Vehicle>{
+		int vehicle_id;
+		String vehicle_name;
+		public Vehicle(int vehicle_id , String vehicle_name){
+			this.vehicle_id = vehicle_id;
+			this.vehicle_name = vehicle_name;
+		}
+		public Vehicle(){ 
+			}
+	public static void main(String[] args)
+	{
+		ArrayList<Vehicle> a1 = new ArrayList<Vehicle>();
+		a1.add(new Vehicle( 1 , "Car");
+		a1.add(new Vehicle( 2 , "Jeep");
+		a1.add(new Vehicle( 3 , "Bike");
+		Collections.sort(a1 , new Vehicle());
+		Iterator itr = a1.iterator();
+		while(itr.hasNext()) {
+				Vehicle v = (Vehicle)itr.next();
+				System.out.println(v.vehicle_name);
+			}
+		}
+	@Overrirde
+	public int compare(Vehicle o1 , Vehicle o2) {
+		Integer i1 = new Integer(o1.vehicle_id);
+		Integer i2 = new Integer(o1.vehicle_id);
+		int result = i1.compareTo(i2);
+		if(result != 0){
+			result = o1.vehicle_name.compareTo(o2.vehicle_name);
+		}
+	  return result;
+	}
+}
+
+Example
+import java .util.*;
+class TreeSetDemo
+{
+	public static void main(String[] args)
+	{
+		TreeSet t = new TreeSet(new MyComparator());
+		t.add(10);
+		t.add(0);
+		t.add(15);
+		t.add(5);
+		t.add(20);
+		System.out.print(t);
+	}
+}
+class MyComparator implements Comparator
+{
+	public int compare(Object obj1,Object obj2);
+	{
+		Integer i1 = new Integer(obj1);
+		Integer i2 = new Integer(obj2);
+		if(i1>i2)
+		return +1;
+		else if(i1<i2)
+		return -1;
+		else(i1 == i2)
+		return 0;
+	}
+}
+Output-
+20 15 10 5 0
+	
+		
+
+Comparable
+comparable interface is used to sort the objects with natural ordering.
+Comparable interface compares "this" reference with the object specified.
+Comparable interface is present in java.lang package.
+Comparable affects the original class, i.e the actual class is modified.
+Comparable provides compareTo() method to sort elements.
+
+Example-
+public class Animal implements Comparable{
+		int animal_id;
+		String animal_name;
+		public Animal(int animal_id , String animal_name){
+			this.animal_id = animal_id;
+			this.animal_name = animal_name;
+		}
+	public static void main(String[] args)
+	{
+		ArrayList<Animal> a1 = new ArrayList<Animal>();
+		a1.add(new Animal( 1 , "Dog");
+		a1.add(new Animal( 2 , "Cat");
+		a1.add(new Animal( 3 , "Horse");
+		Collections.sort(a1);
+		Iterator itr = a1.iterator();
+		while(itr.hasNext()) {
+				Animal a = (Animal)itr.next();
+				System.out.println(a.animal_name);
+			}
+		}
+	@Overrirde
+	public int compareTo(Object o) {
+		Animal an = (Animal) o;
+		return this.animal_name.compareTo(an.animal_name);
+	}
+}

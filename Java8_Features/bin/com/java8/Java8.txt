@@ -1,0 +1,1716 @@
+What is the difference between transient and volatile keyword in Java? Volatile and Transient 
+are two completely different keywords that are used in Java. A Transient keyword is used during 
+serialization of Java object. Volatile is related to the visibility of variables modified by multiple
+ threads.
+ Volatile can be serialized.Transient in Java is used to indicate that a field should not be part of the serialization process.
+ 
+ The main difference between Global and local variables is that global variables can be accessed
+ globally in the entire program, whereas local variables can be accessed only within the function 
+ or block in which they are defined.
+ 
+The main difference between the two (static versus transient) is that static variables exist only
+once per transaction, but transient variables can exist many times. In other words, static variables 
+have a global scope, while transient variables have a local scope. I
+Both are not serializable.
+
+
+
+uri - https://javaconceptoftheday.com/java-8-stream-intermediate-and-terminal-operations/
+Java 8 map() and flatMap() are two important methods of 
+java.util.stream.Stream interface used for transformation or mapping 
+operations. Both are intermediate operations. The only difference is 
+that map() takes Stream<T> as input and return Stream<R> where as 
+flatMap() takes Stream<Stream<T> as input and return Stream<R> i.e
+flatmap() removes extra layer of nesting around input values.
+
+In Java 8, HashMap replaces the linked list with another useful data 
+structure i.e. binary tree on breaching a certain threshold, which is 
+known as TREEIFY_THRESHOLD . Once this threshold is reached the linked
+ list of Entries is converted to the TreeNodes which reduces the time 
+ complexity from O(n) to O(log(n)) 
+   <------------------------------------------>
+Predicate - returns Boolean
+Function - one argument and produces a result.
+Consumer - one argument and produces no result. 
+
+
+BiConsumer is a functional interface, has one abstract method i.e accept(), similar to a Consumer Interface. The difference between consumer and
+BiConsumer is Consumer interface accepts single parameter where as BiConsumer accepts two input parameters, and both doesn't return anything.
+
+The difference between these is that the predicate uses the parameter to make some decision and return a boolean whereas Consumer uses the 
+parameter to change some of its value.
+ 
+Predicate : A predicate is a function that returns a value that is either true or false(boolean).
+Function : This functional interface represents a function that accepts one argument and produces a result.
+Consumer :This represents an operation that accepts a single input argument and returns no result. The real outcome is the side-effects it 
+produces.
+Supplier : This does the opposite of the Consumer, it takes no arguments but it returns some value. It may return different values when it is 
+being called more than once.
+
+
+Java -8 new Features:-
+1.Lambda Expression
+2.Functional Interface
+3.Default Methods and static methods
+4.Predefined Functional Interfaces
+	Predicate
+	Function
+	Consumer
+	Supplier
+	etc
+5.Double Colon Operator( :: )
+	Method reference
+	Constructor reference
+6.Streams
+7.Date and Time API
+8.Optional Class
+9.Noshorn Javascript Machine
+
+
+      Lambda Expression
+Main objectives of Lambda Expressions
+to bring benefits of functional programming into java.
+Lambda Expression is nothing but anonymous function which has
+	No Name
+	No return type
+	No modifiers
+
+What is Lambda Expression?
+ It is an anonymous function 
+		nameless
+		without return type
+		without modifiers
+Example1-
+Java-7
+public void m1()
+	{
+		System.out.println("Hello");
+	}
+In Java-8
+()->System.out.println("Hello");
+
+Example2-
+Java-7
+public void m2(int a,int b)
+{
+	System.out.println(a+b);
+}
+
+Java-8
+(a,b)->System.out.println(a+b);
+
+Example3-
+Java-7
+public int squareIT(int n)
+{
+	return n*n;
+}
+
+Java-8
+(int n)->{ return n*n;}
+This can also be written as
+(int n)->n*n;
+This can also be written as
+(n)->n*n;
+Note- If you want to return something without body means {} then you don't need to specify return keyword.The same above can be written as
+n->n*n; 
+Note- Without curly braces we can not use return keyword,compiler will consider returned value automatically.
+Within curly braces if we want to return some value compulsory we should use return statement.
+
+
+Example4-
+Java7
+public String m1(String s)
+{
+	return s.length();
+}
+
+Java8
+s->s.length();
+
+
+                                         <------------Functional Interface--------------------->
+Functinal Interface are those which contains only single abstract method.
+If we want to invoke Lambda Expression then compulsary Functional Interface must be required.
+Job of Functional Interface to call or invoke Lambda Expression.
+@FunctionalInterface annotation is used to specify that this interface is Functional Interface and whether we give or not give this annotation if 
+interface contains one abstract method then also it is called FunctionalInterface.It means it not mandatory.  
+
+Runnable==>run()
+Comparable==>compareTo()
+Comparator==>compare()
+ActionListener==>actionPerformed()
+Callable==>call()
+
+Example-
+@FunctionalInterface
+interface Interf
+{
+	public void m1();
+	default void m2()
+	{    }
+	public static void m3()
+	{    }
+}
+
+
+
+Functional Interface with respect to inheritance concept-
+Example-
+@FunctionalInterface
+interface A
+{
+	public void m1();
+}
+@FunctionalInterface
+interface B extends A
+{
+
+}
+Note - If parent interface is Functional Interface then automatically Child interface will be Functional interface if it doesn't contain any
+ abstract method.
+
+Example-
+@FunctionalInterface
+interface A
+{
+	public void m1();
+}
+@FunctionalInterface
+interface B extends A
+{
+	public void m1();
+}
+Note- It is also valid because we are just overriding the m1() and still child has only one method.
+
+Now see Lambda Expression with Functional Interface:-
+
+interface Interf
+{
+	public void m1();
+{
+class Demo implements Interf
+{
+	public void m1()
+	{
+		System.out.println("Hello");
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		Demo d = new Demo();
+		d.m1();
+	}
+}
+Output- Hello
+
+Above program can be written as
+interface Interf
+{
+	public void m1();
+{
+class Demo implements Interf
+{
+	public void m1()
+	{
+		System.out.println("Hello");
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		interf i = new Demo();
+		i.m1();
+	}
+}
+Output- Hello
+
+Above program can be written as
+interface Interf
+{
+	public void m1();
+{
+class Test
+{
+	public static void main(String[] args)
+	{
+		interf i = ()->System.out.println("Hello");
+		i.m1();
+	}
+}
+Output- Hello
+
+Example-
+interface Interf
+{
+	public void m1();
+{
+class Demo implements Interf
+{
+	public void add(int a,int b)
+	{
+		System.out.println("The Sum:"+(a+b));
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		Interf i = new Demo();
+		i.add(10,20);
+	}
+}
+Output- The Sum: 30
+
+The above example can be written as-
+interface Interf
+{
+	public void add(int a,int b);
+{
+
+class Test
+{
+	public static void main(String[] args)
+	{
+		Interf i = (a,b)->System.out.println("The Sum:"+(a+b));
+		i.add(10,20);
+	}
+}
+Output- The Sum: 30
+
+The above example can be written as-
+interface Interf
+{
+	public void add(int a,int b);
+{
+
+class Test
+{
+	public static void main(String[] args)
+	{
+		Interf i = (a,b)->System.out.println("The Sum:"+(a+b));
+		i.add(10,20);
+		i.add(30,40);
+	}
+}
+Output- The Sum: 30
+	The Sum: 70
+
+Example-
+interface Interf
+{
+	public int squareIt(int n);
+{
+
+class Test
+{
+	public static void main(String[] args)
+	{
+		Interf i = n->n*n;
+		System.out.println(i.squareIt(4));
+		System.out.println(i.squareIt(5));
+	}
+}
+Output-
+16
+25
+Note- No dot class file will be generated for Lambda Expression
+
+*Multithreading concept with Lambda expression-
+class MyRunnable implements Runnable
+{
+	public void run()
+	{
+		for(int i=0;i<=10;i++)
+		{
+			System.out.println("Child Thread");
+		}
+	}
+}
+class Test
+{
+	public static void main(string[] args)
+	{
+		MyRunnable r = new MyRunnable();
+		Thread t = new Thread(r);
+		t.start();
+		for(int i=0;i<=10;i++)
+		{
+			System.out.println("Main Thread");
+		}
+	}
+} 
+
+Note-Runnable is functional interface because it has only one method run();
+
+The above program can be written as:
+
+class Test
+{
+	public static void main(string[] args)
+	{
+		Runnable r = ()->{
+			for(int i=0;i<=10;i++)
+			{
+				System.out.println("Child Thread");
+			}
+		};
+		Thread t = new Thread(r);
+		t.start();
+		for(int i=0;i<=10;i++)
+		{
+			System.out.println("Main Thread");
+		}
+	}
+} 
+
+Collection concept with Lambda Expression-
+Comparator
+int compare(Object obj1,Object obj2)
+	returns -ve if obj1 has to come before obj2
+	returns +ve if obj1 has to come after obj2
+	returns 0 if obj1  come equal to obj2
+import java.util.*;
+class MyComparator implements Comparator<Integer>
+{
+	public int compare(Integer i1,Integer i2)
+	{
+		if(i1<i2)
+		{
+			return -1;
+	`	}
+		else if(i1>i2)
+		{
+			return +1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+}
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(10);
+		l.add(20);
+		l.add(5);
+		l.add(30);
+		l.add(15);
+		System.out.println(l);
+		Collection.sort(l,new MyComparator());
+		System.out.println(l);
+	}
+} 
+Output-
+[10,20,5,30,15]
+[5,10,15,20,30]
+
+Above program can written like this also
+import java.util.*;
+class MyComparator implements Comparator<Integer>
+{
+	public int compare(Integer i1,Integer i2)
+	{
+		return (i1<i2)?-1:(i1>i2)?1:0;  //ternary operator
+	}
+}
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(10);
+		l.add(20);
+		l.add(5);
+		l.add(30);
+		l.add(15);
+		System.out.println(l);
+		Collection.sort(l,new MyComparator());
+		System.out.println(l);
+	}
+} 
+
+Above program can written like this also
+Java8
+import java.util.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(10);
+		l.add(20);
+		l.add(5);
+		l.add(30);
+		l.add(15);
+		System.out.println(l);
+		comparator<Integer> c= (i1,i2)->(i1<i2)?-1:(i1>i2)?1:0;
+		Collection.sort(l,c);
+		System.out.println(l);
+	}
+} 
+
+With Stream Example based on above
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(10);
+		l.add(20);
+		l.add(5);
+		l.add(30);
+		l.add(15);
+		System.out.println(l);
+		comparator<Integer> c= (i1,i2)->(i1<i2)?-1:(i1>i2)?1:0;
+		Collection.sort(l,c);
+		l.stream().forEach(System.out::println);
+		List<Integer> l2 = l.stream().filter(i->i%2==0).collect(Collectors.toList());
+		System.out.println(l2);
+	}
+}
+Output-
+[10,20,5,30,15]
+5
+10
+15
+20
+30
+[10,20]
+
+
+				<--------------Annonymous Class v/s Lambda Expression------------>
+class Employee
+{
+	String name;
+	int eno;
+	Employee(String name,int eno)
+	{
+		this.name=name;
+		this.eno=eno;
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		Employee e = new Employee("Durga",100);
+		System.out.println(e);
+	}
+}
+Output-
+Employee@15db9742
+
+Example-
+class Employee
+{
+	String name;
+	int eno;
+	Employee(String name,int eno)
+	{
+		this.name=name;
+		this.eno=eno;
+	}
+	public String toString()
+	{
+		return name+":"+eno;
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		Employee e = new Employee("Durga",100);
+		System.out.println(e);
+	}
+}
+Output-
+Durga : 100
+
+Example-
+class Employee
+{
+	String name;
+	int eno;
+	Employee(String name,int eno)
+	{
+		this.name=name;
+		this.eno=eno;
+	}
+	public String toString()
+	{
+		return name+":"+eno;
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		ArrayList<Employee> l = new ArrayList<Employee>();
+		l.add(new Employee("Durga",872425);
+		l.add(new Employee("Sunny",242424);
+		l.add(new Employee("Rajesh",252525);
+		System.out.println(l);
+	}
+}
+Output-
+[Durga:872425,Sunny:242424,Rajesh:252525]
+
+Example-
+class Employee
+{
+	String name;
+	int eno;
+	Employee(String name,int eno)
+	{
+		this.name=name;
+		this.eno=eno;
+	}
+	public String toString()
+	{
+		return name+":"+eno;
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		ArrayList<Employee> l = new ArrayList<Employee>();
+		l.add(new Employee("Durga",872425);
+		l.add(new Employee("Sunny",242424);
+		l.add(new Employee("Rajesh",252525);
+		System.out.println(l);
+		Collections.sort(l,Comparator c);
+	}
+}
+Output-
+[Durga:872425,Sunny:242424,Rajesh:252525]
+
+*Anonymous Class
+Example-
+
+Thread t = new Thread();
+We are writing anonymous class which extends Thread-
+1.Thread t = new Thread(){.....};
+2.Runnable r = new Runnable(){......};
+Example with Annonymous class-
+class Test
+{
+	public static void main(string[] args)
+	{
+		Runnable r = new Runnable(){
+			public void run(){
+				{
+					for(int i;i<=10;i++)
+					{
+						System.out.printlm("Child Thread");
+					}
+				}
+			};
+		Thread t = new Thread();
+		t.start();
+		for(int i=1;i<=10;i++)
+		{
+			System.out.println("Main Thread");
+		}
+	}
+} 
+
+Same Example with Lambda Expression because Runnable is Functional Interface
+class Test
+{
+	public static void main(string[] args)
+	{
+		Runnable r=()->{
+			for(int i=1;i<=10;i++)
+			{
+				System.out.println("Child Class");
+			}
+		};
+		Thread t = new Thread();
+		t.start();
+		for(int i=1;i<=10;i++)
+		{
+			System.out.println("Main Thread");
+		}
+	}
+} 
+Note:- We can go for Lambda expression when annonymous inner class has one abstract method but we can not go for it if it contains more than one method.
+Annonymous Inner class is more powerfull.
+Annonymous Class != Lambda Expression
+If Anonymous Inner class implements an interface that contains single abstract method then only we can replace that annonymous inner class with lambda expressions.
+Example syntactically-
+interface A
+{
+	m1();
+	m2();
+}
+A a =new A(){
+	public void m1(){....}
+	public void m2(){....}
+};
+
+Note-
+Annonymous Class-
+Annonymous inner class can extend a normal class.
+Annonymous inner class can extend an abstract class.
+Annonymous inner class can implemnt an interface which contains any number of abstract class.
+
+Lambda Expression-
+Lambda expression can implement an interface which contains a single abstract method(Functional Interface).
+
+					<---------Default and Static Method------->
+until java-7
+Every method present inside interface is alwayz public and abstract.
+void m1();
+public void m1();
+abstract void m1();
+public abstract void m1();
+
+Related Methods-
+1.8 - default methods + static methods
+1.9 - private method
+
+Now about Default Method
+Default methods are also known as Virtual Extension method or Defender methods.
+Note - Without effecting implementation classes if we want to add new method to the interface then we should go for Default method concept.
+Default method can not be defined in class.It can be declared only in interface.
+Object class method we can not be defined as Default method for example hashCode().
+
+Example-
+interface Interf
+{
+	default void m1(){
+		System.out.println("Default Method");
+	}
+}
+class Test implements Interf
+{
+	public static void main(String[] args)
+	{
+		Test i = new Test();
+		i.m1();
+`	}
+}  
+Output-
+Default Method
+
+Example
+interface Interf
+{
+	default void m1(){
+		System.out.println("Default Method");
+	}
+}
+class Test implements Interf
+{
+	public void m1(){
+		System.out.println("Overriding version of Default Method");
+		}
+	public static void main(String[] args)
+	{
+		Test i = new Test();
+		i.m1();
+`	}
+}  
+Output-
+ Overriding version of Default Method
+Note- Default method beauty is that it is implemented by default to all classes but if we want then we can override it and no error will be shown(above example).
+
+Example-
+interfcae Left
+{
+	default void m1()
+	{
+		System.out.println("Left interface m1 method");
+	}
+}
+interface Right
+{
+	default void m1()
+	{
+		System.out.println("Right interface m1 method");
+	}
+}
+class Test implements Left,Right
+{
+	public void m1()
+	{
+		System.out.println("Our own m1 method");
+	}
+	public static void main(String[] args)
+	{
+		Test t =new Test();
+		t.m1();
+	`}
+}					
+Output-
+Our own m1 method
+
+Example-
+interfcae Left
+{
+	default void m1()
+	{
+		System.out.println("Left interface m1 method");
+	}
+}
+interface Right
+{
+	default void m1()
+	{
+		System.out.println("Right interface m1 method");
+	}
+}
+class Test implements Left,Right
+{
+	public void m1()
+	{
+		
+		//System.out.println("Our own m1 method");
+		Left.super.m1();
+	}
+	public static void main(String[] args)
+	{
+		Test t =new Test();
+		t.m1();
+	`}
+}					
+Output-
+Left method m1 method
+
+Class vs Interface
+Interface is light component than Class.
+Interface never contain constructor .
+Class is costly than interface.
+From java 1.8 version Interface can also contain static methods.
+Example-
+interface Interf
+{
+	public static void m1(){
+		System.out.println("Interface static method");
+		}
+}
+class Test implements Interf
+{
+	
+	public static void main(String[] args)
+	{
+		Interf.m1();//-- -------------------valid way of calling
+		m1();//-- not valid way of calling
+		Test.m1();//-- not valid way of calling
+		Test t =new Test();
+		t.m1();//--not valid way of calling
+	`}
+}
+
+Note-Interface static methods by default not available to implementation class.
+Interface static method only called by using Interface name only.
+Whether a class implementing or not interface but the rule remain same for all in static method 
+
+Example-
+interface Interf
+{
+	public static void m1(){
+		System.out.println("Interface static method");
+		}
+}
+class Test
+{
+	
+	public static void main(String[] args)
+	{
+		Interf.m1();
+		
+	`}
+}
+This will run fine.
+
+Example
+interface Interf
+{
+	
+	public static void main(String[] args)
+	{
+		S
+		
+-	`}
+}
+This will save as Interf.java file and will run fine.
+
+
+
+---------------------------------------
+Predefined Functional Interface--There are Predefined Functional Interfaces available defined in Java8 to make Lambda Expression  perform common activity.
+Predicate-Take somr input and perform some conditional check and return boolean value.   test()
+Function-Take some input and perform some operation and return anything but not boolean.    apply();
+Consumer-Accept some input and perform required operation but note it doesn't return anything because it is of void type.     accept()
+Supplier-Just supply my required objects and it won't take any input.         get()
+--------------------------------------------
+Two argument Predefined Functional interfaces:
+BiPredicate
+BiFunction
+BiConsumer
+--------------------------------------------
+Primitive Functional Interface
+IntPredicate
+IntFunction
+IntConsumer
+-------------------------------------------
+
+Predicate
+It used for conditional check.
+Predicate contains only one abstract method-
+public abstract boolean test(T t)
+
+Example-
+import java.util.function.*;
+class Test
+{
+	public static void main(String[] args)
+	{
+		Predicate<Integer> p=i->i%2==0;
+		System.out.println(p.test(10));
+		System.out.println(p.test(15));
+	}
+}
+Output-
+True
+False
+
+Example:-
+import java.util.function.*;
+class Test
+{
+	public static void main(String[] args)
+	{
+		String[] s = {"Nag","Chiranjeev","Venkatesh","Balaiah","Sunny","Katrina"};
+		Predicate<String> p=s1->s1.length()>5;
+		for(String s1 : s)
+		{
+			if(p.test(s1))
+			{
+				System.out.println(s1);
+			}
+		}
+	}
+}
+Output-
+Chiranjeevi
+Venkatesh
+Balaiah
+Katrina
+
+Example:-
+import java.util.function.*;
+class Test
+{
+	public static void main(String[] args)
+	{
+		String[] s = {"Nag","Chiranjeev","Venkatesh","Balaiah","Sunny","Katrina"};
+		Predicate<String> p=s1->s1.length()%2==0;
+		for(String s1 : s)
+		{
+			if(p.test(s1))
+			{
+				System.out.println(s1);
+			}
+		}
+	}
+}
+Output-
+Venkatesh
+
+Example:-
+import java.util.function.*;
+import java.util.*;
+class Employee
+{
+	String name;
+	double salary;
+	Employee(String name,double salary)
+	{
+		this.name = name;
+		this.salary = salary;
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		ArrayList<Employee> l = new ArrayList<Employee>();
+		l.add(new Employee("Durga",1000));
+		l.add(new Employee("Ravi",2000));
+		l.add(new Employee("Shiva",3000));
+		l.add(new Employee("Mahesh",4000));
+		Predicate<Employee> p = e->e.salary>3000;
+		for(Employee e1 : l)
+		{
+			if(p.test(e1))
+			{
+				System.out.println(e1.name+":"+e1.salary);
+			}
+		}
+			
+	}
+}
+Output-
+Mahesh:4000
+
+---------Predicate Joining-----------------
+
+and()
+or()
+negate()
+
+Example-
+import java.util.function.*;
+import java.util.*;
+class Test
+{
+	public static void main(String[] args)
+	{
+		int[] x = {0,5,10,15,20,25,30,35};
+		Predicate<Integer> p1 = i->i%2==0;
+		Predicate<Integer> p1 = i->i>10;
+		System.out.println("The number which are even and > 10 are");
+		for(int x1 :x)
+		{
+		   if(p1.and(p2).test(x1))
+		   {
+			System.out.println(x1);
+		   }
+		}
+	}
+}
+Output-
+The number which are even and > 10 are
+20
+30
+
+Example-
+import java.util.function.*;
+import java.util.*;
+class Test
+{
+	public static void main(String[] args)
+	{
+		int[] x = {0,5,10,15,20,25,30,35};
+		Predicate<Integer> p1 = i->i%2==0;
+		Predicate<Integer> p1 = i->i>10;
+		System.out.println("The number which are even or > 10 are");
+		for(int x1 :x)
+		{
+		   if(p1.or(p2).test(x1))
+		   {
+			System.out.println(x1);
+		   }
+		}
+	}
+}
+Output-
+The number which are even and > 10 are
+0
+10
+15
+20
+25
+30
+35
+
+Example-
+import java.util.function.*;
+import java.util.*;
+class Test
+{
+	public static void main(String[] args)
+	{
+		int[] x = {0,5,10,15,20,25,30,35};
+		Predicate<Integer> p1 = i->i%2==0;
+		Predicate<Integer> p1 = i->i>10;
+		System.out.println("The number which are even are");
+		for(int x1 :x)
+		{
+		   if(p1.test(x1))
+		   {
+			System.out.println(x1);
+		   }
+		}
+	}
+}
+Output-
+The number which are even are
+0
+10
+20
+30
+
+
+Example-
+import java.util.function.*;
+import java.util.*;
+class Test
+{
+	public static void main(String[] args)
+	{
+		int[] x = {0,5,10,15,20,25,30,35};
+		Predicate<Integer> p1 = i->i%2==0;
+		Predicate<Integer> p1 = i->i>10;
+		System.out.println("The number which are not even are");
+		for(int x1 :x)
+		{
+		   if(p1.negate().test(x1))
+		   {
+			System.out.println(x1);
+		   }
+		}
+	}
+}
+Output-
+The number which are not even are
+5
+15
+25
+35
+
+Function of Predefined Functional Interface------------------------
+
+import java.util.function.*
+class Test
+{
+	public static void main(String[] args)
+	{
+		Function<Integer,Integer> f = i->i*i;
+		System.out.println(f.apply(4));
+		System.out.println(f.apply(5));
+	}
+}
+Output
+16
+25		
+
+Example-
+import java.util.function.*
+class Test
+{
+	public static void main(String[] args)
+	{
+		Function<String,Integer> f = s->s.length();
+		System.out.println(f.apply("durga"));
+
+	}
+}
+Output
+5
+
+Example-
+import java.util.function.*
+class Test
+{
+	public static void main(String[] args)
+	{
+		Function<String,String> f = s->s.toUpperCase();
+		System.out.println(f.apply("durga"));
+
+	}
+}
+Output
+DURGA	
+
+Example-
+import java.util.*;
+class Student
+{
+	String name;
+	int marks;
+	Student(String name,int marks)
+	{
+		this.name = name;
+		this.marks = marks;
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		Function<Student,String> f=s->{
+			int marks=s.marks;
+			String grade="";	
+			if(marks>=80) grade="A[Distinction]";
+			else if(marks>=60) grade="B[First Class]";
+			else if(marks>=50) grade="C[Second Class]";
+			else if(marks>=35) grade="D[Third Class]";
+			else | grade="[Failed]";
+			return grade;
+			};
+		Student[] s = { 
+				new Student("Durga",100);
+				new Student("Sunny",65);
+				new Student("Bunny",55);
+				new Student("Chinny",45);
+				new Student("Vinny",25);
+			};
+		for(Student s1 : s)
+			{
+				System.out.println("Student name:"+s1.name);
+				System.out.println("Student marks:"+s1.name);
+				System.out.println("Student grade:"+f.apply(s1));
+			}
+	}
+}
+				
+				
+
+Function Chaining---------
+f1.andThen(f2).apply(i)
+f1.andThen(f2).andThen(f3).apply(i)
+first f1 followed by f2
+
+f1.compose(f2).apply(i)
+first f2 and then f1
+
+Example-
+class Test
+{
+	public static void main(String[] args)
+	{
+
+		Function<IInteger,Integer> f1 = i->2*i;
+		Function<IInteger,Integer> f2 = i->i*i*i;
+		System.out.println(f1.andThen(f2).apply(2));
+	}
+}
+Output:
+64
+
+Example-
+class Test
+{
+	public static void main(String[] args)
+	{
+
+		Function<Integer,Integer> f1 = i->2*i;
+		Function<Integer,Integer> f2 = i->i*i*i;
+		System.out.println(f1.compose(f2).apply(2));
+	}
+}
+Output
+16
+
+Consumer------------
+Predicate<T>   -----> boolean return type
+Function<T,R>  ------> Return Type anything
+Consumer<T>  -------> void (don't return anything)
+
+Example-
+class Test
+{
+	public static void main(String[] args)
+	{
+
+		Consumer<String> c = s->System.out.println(s);
+		c.accept("durga");
+		c.accpet(""durgasoftware);
+	}
+}
+Output
+durga
+durgasoftware
+
+
+
+
+Example-
+class Movie
+{
+	String name;
+	Movie(String name)
+	{
+		this.name=name;
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		Consumer<Movie> c1=m->System.out.println(m.name+"ready to release ");
+		Consumer<Movie> c2=m->System.out.println(m.name+"released but bigger flop ");
+		Consumer<Movie> c3=m->System.out.println(m.name+"storing information in database");
+		Movie m = new Movie("Spider");
+		c1.accept(m);
+		c2.accept(m);
+		
+	}
+}
+Output
+Spider ready to release
+Spider released but bigger flop
+
+Example-
+class Movie
+{
+	String name;
+	Movie(String name)
+	{
+		this.name=name;
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		Consumer<Movie> c1=m->System.out.println(m.name+"ready to release ");
+		Consumer<Movie> c2=m->System.out.println(m.name+"released but bigger flop ");
+		Consumer<Movie> c3=m->System.out.println(m.name+"storing information in database");
+		Consumer<Movie> cc=c1.andThen(c2).andThen(c3);
+		Movie m = new Movie("Spider");
+		cc.accept(m);
+		
+	}
+}
+Output
+Spider ready to release
+Spider released but bigger flop
+Spider storing information in database.
+
+
+Supplier---------
+Example
+import java.util.function.Supplier; 
+  
+public class Main { 
+    public static void main(String args[]) 
+    { 
+  
+        // This function returns a random value. 
+        Supplier<Double> randomValue = () -> Math.random(); 
+  
+        // Print the random value using get() 
+        System.out.println(randomValue.get()); 
+    } 
+} 
+
+Output
+0.5685808855697841
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <---------Stream-------->
+Stream concept we can use to process objects from Collection.
+In Stream we should go for map() method when for every object we want a new object by applying some operation or functions.
+Methods in Stream
+stream()  //  To create stream
+filter()  //  To process objects of collection 
+map()    //  To get new object after performing operation
+collect()  // to collect objects
+count()   //To count objects from collection
+sorted()   //   to sort elements
+
+
+Example-
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(10);
+		l.add(20);
+		l.add(5);
+		l.add(30);
+		l.add(15);
+		System.out.println(l);
+		l.stream().forEach(System.out::println);
+		List<Integer> l1 = l.stream().filter(i->i%2==0).collect(Collectors.toList());
+		System.out.println(l1);
+	}
+}
+Output-
+[10,20,5,30,5]
+[10,20,30]
+
+Example-
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(10);
+		l.add(12);
+		l.add(5);
+		System.out.println(l);
+		l.stream().forEach(System.out::println);
+		List<Integer> l1 = l.stream().map(i->i*2).collect(Collectors.toList());
+		System.out.println(l1);
+	}
+}
+Output-
+[10,12,5]
+[20,24,10]
+
+filter(Predicate)   //Predicate will return alwayz boolean value either true or false
+				to perform conditional check we should go for Predicate
+map(Function)       //Function going to return any kind of value
+
+Example-
+
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> marks = new ArrayList<Integer>();
+		marks.add(70);
+		marks.add(45);
+		marks.add(10);
+		marks.add(65);
+		marks.add(20);
+		marks.add(25);
+		System.out.println(marks);
+		long noOfFailedStudents = marks.stream().filter(m->m<35).collect();
+		System.out.println(noOfFailedStudents);
+	}
+}
+Output-
+[70,45,10,65,20,25]
+3    //Three students failed
+
+Example
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> marks = new ArrayList<Integer>();
+		marks.add(70);
+		marks.add(45);
+		marks.add(10);
+		marks.add(65);
+		marks.add(20);
+		marks.add(25);
+		System.out.println(marks);
+		List<Integer> sortedList = marks.stream().sorted((i1,i2)->i1.compareTo(i2)).collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+}
+Output-
+[70,45,10,65,20,25]
+[10,20,25,45,65,70]
+Note- Default sorting order uses Comparable interface and its compareTo() method.
+
+Example
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> marks = new ArrayList<Integer>();
+		marks.add(70);
+		marks.add(45);
+		marks.add(10);
+		marks.add(65);
+		marks.add(20);
+		marks.add(25);
+		System.out.println(marks);
+		List<Integer> sortedList = marks.stream().sorted((i1,i2)->-i1.compareTo(i2)).collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+}
+Output-
+[70,45,10,65,20,25]
+[70,65,45,25,20,10]
+Note- Default sorting order uses Comparable interface and its compareTo() method.
+
+Example
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> marks = new ArrayList<Integer>();
+		marks.add(70);
+		marks.add(45);
+		marks.add(10);
+		marks.add(65);
+		marks.add(20);
+		marks.add(25);
+		System.out.println(marks);
+		List<Integer> sortedList = marks.stream().sorted((i1,i2)->i2.compareTo(i1)).collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+}
+Output-
+[70,45,10,65,20,25]
+[70,65,45,25,20,10]
+Note- Default sorting order uses Comparable interface and its compareTo() method.
+
+Example
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> marks = new ArrayList<Integer>();
+		marks.add(70);
+		marks.add(45);
+		marks.add(10);
+		marks.add(65);
+		marks.add(20);
+		marks.add(25);
+		System.out.println(marks);
+		List<Integer> sortedList = marks.stream().sorted().collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+}
+Output-
+[70,45,10,65,20,25]
+[10,20,25,45,65,70]
+Note- Default sorting order uses Comparable interface and its compareTo() method.
+
+Example
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<String> l = new ArrayList<String>();
+		l.add("Sunny");
+		l.add("Alam");
+		l.add("Rajiv");
+		System.out.println(l);
+		List<String> sortedList = marks.stream().sorted().collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+}
+Output-
+[Sunny,Alam,Rajiv]
+[Alam,Rajiv,Sunny]
+Note- Default sorting order uses Comparable interface and its compareTo() method.
+
+Example
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<String> l = new ArrayList<String>();
+		l.add("Sunny");
+		l.add("Alam");
+		l.add("Rajiv");
+		System.out.println(l);
+		List<String> sortedList = marks.stream().sorted((s1,s2)->s2.compareTo()s1).collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+}
+Output-
+[Sunny,Alam,Rajiv]
+[Sunny,Rajiv,Alam]
+Note- Default sorting order uses Comparable interface and its compareTo() method.
+
+
+Example 
+Comparator for descending order-
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> marks = new ArrayList<Integer>();
+		marks.add(70);
+		marks.add(45);
+		marks.add(10);
+		marks.add(65);
+		marks.add(20);
+		marks.add(25);
+		System.out.println(marks);
+		List<Integer> sortedList = marks.stream().sorted((i1,i2)->(i1<i2)?1:(i1>i2)?-1:0)).collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+}
+Output-
+[70,45,10,65,20,25]
+[70,65,45,25,20,10] 
+
+Example
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<String> l = new ArrayList<String>();
+		l.add("Sunny");
+		l.add("Alam");
+		l.add("Ana");
+		.add("Sanjeev");
+		System.out.println(l);
+		Comparator<String> c =(s1,s2)->{
+		int l1=s1.length();
+		int l2=s2.length();
+		if(l1<l2) return -1;
+		else if(l2>l1) return +1;
+		else return s1.compareTo(s2);
+		List<String> sortedList = marks.stream().sorted(c).collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+}
+Output-
+[Sunny,Alam,Ana,Sanjeev]
+[Ana,Alam,Sunny,Sanjeev]
+
+
+Example 
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(70);
+		l.add(45);
+		l.add(10);
+		l.add(65);
+		l.add(20);
+		l.add(25);
+		System.out.println(l);
+		Integer min = l.stream().min((i1,i2)->i1.compareTo(i2).get());
+		System.out.println(min);
+		Integer max = l.stream().max((i1,i2)->i1.compareTo(i2).get());
+		System.out.println(max);
+	}
+}
+Output-
+[70,45,10,65,20,25]
+10   minimum value
+70   maximum value
+
+Example 
+import java.util.*;
+import java.util.stream.*;
+class Test
+{
+	public static void main(string[] args)
+	{
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(70);
+		l.add(45);
+		l.add(10);
+		l.add(65);
+		l.add(20);
+		l.add(25);
+		System.out.println(l);
+		l.stream().forEach(System.out::println)
+	}
+}
+Output-
+[70,45,10,65,20,25]
+70
+45
+10
+65
+20
+25
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Test
+{
+	public static int squareIT(int n)
+	{
+		return n*n;
+	}
+	public static void main(String[] args)
+	{
+		System.out.println("The Square of 4:"+squareIT(4));
+		System.out.println("The Square of 4:"+squareIT(5));
+	}
+}
+
+import java.util.function.*;
+class Test
+{
+	public static void main(String[] args)
+	{
+		Function<Integer,Integer> f=i->i*i;
+		System.out.println("The Square of 4:"+f.apply(4));
+		System.out.println("The Square of 4:"+f.apply(5));
+	}
+}
+
+	

@@ -1,0 +1,217 @@
+File I/O
+1.File
+2.FileWriter
+3.FileReader
+4.BufferedWriter
+5.BufferedReader
+6.PrintWriter
+
+<------File--------->
+File f = new File("abc.txt"); ->It will create a java file object and It won't create any File.
+System.out.println(f.exists());-->false will be answer
+f.createNewFile();-->Now file will be created and f jave object reference points towards "abc.txt".
+System.out.println(f.exists());-->true will be answer
+
+
+File f = new File("abc"); ->It will create a java file object and It won't create any File.
+System.out.println(f.exists());-->false will be answer
+f.mkdir();-->Now Directory will be created and f jave object reference points towards "abc.txt".
+System.out.println(f.exists());-->true will be answer
+
+Example to display all files present in a Folder
+class File1
+{
+	public static void main(String[] args) throws Exception
+	{
+		int count = 0;
+		File f = new File("C:\\JavaPrograms");
+		String s[] = f.list();
+		for(String s1:s)
+		{
+			count++;
+			System.out.println(s1);
+		}
+	System.out.println("The total number"+count);
+	}
+}
+
+
+1.File Writer
+We can use FileWriter object to write Character Data(text data) to the file.
+
+Constructors
+FileWriter fw = new FileWriter(String name);
+FileWriter fw = new FileWriter(File);
+The above two constructors mean to overirriding existing data.
+Instead of overriding if we want to perform append operation then we have to use the following two constructors
+  FileWriter fw = new FileWriter(String name,boolean append);
+FileWriter fw = new FileWriter(File f,boolean append);
+Note: If the specified file is not present then all the above constructors will create that file.
+
+Output Overide Example
+import java.io*;
+class FileWriterDemo
+{
+	public static void main(String[] args) throws IOException
+	{
+		FileWriter fw = new FileWriter("abc.txt");
+		fw.write(100);
+		fw.write("urga\nSoftwaresolutions");
+		fw.write('\n');
+		char[] ch={'a','b','c'};
+		fw.write(ch);
+		fw.write('\n');
+		fw.flush();
+		fw.close();
+	}
+}
+Output-
+Durga
+SoftwareSolutions
+abc    ---> the no. of time will run will get same output
+
+Append In File again again example-
+import java.io*;
+class FileWriterDemo
+{
+	public static void main(String[] args) throws IOException
+	{
+		FileWriter fw = new FileWriter("abc.txt",true);
+		fw.write(100);
+		fw.write("urga\nSoftwaresolutions");
+		fw.write('\n');
+		char[] ch={'a','b','c'};
+		fw.write(ch);
+		fw.write('\n');
+		fw.flush();
+		fw.close();
+	}
+}
+Output-
+Durga
+SoftwareSolutions
+abc 
+Durga
+SoftwareSolutions
+abc    ---> the no. of time will run will get append added output.
+
+Note-The problem with file writer is we have to insert line separator (\n) manually,which is varied from system to system.It is very difficult for a programmer.
+
+2.FileReader
+We can use FileReader to read character data from the file.
+Constructors-
+FileReader fr = new FileReader(String fName);
+FileReader fr = new FileReader(File file);
+
+methods
+int read();
+int read(char[] ch);
+void close();
+
+Example-
+import java.io.*;
+class FileReaderDemo
+{
+	public static void main(String[] args)throws IOException
+	{
+		FileReader fr = new FileReader(abc.txt);
+		int i = fr.read();
+		while(i!=-1)
+		{
+			System.out.print((char)i);
+			i = fr.read();
+		}
+		fr.close();
+	}
+}
+Output-
+Durga
+SoftwareSolutions
+abc 
+
+Note- It is not recommended to use FileWriter or FileReader because of \n problem in  FileWriter and FileReader is also not recommended because it read data char to 
+char which is not convenient for programmer.
+
+BufferedWriter and BufferedReader does not handle file directly so we need FileWriter and FileReader with them to handle Files.
+
+*BufferedWriter
+writer we use BufferWriter to write text data to file.
+Constructors-
+BufferedWriter bw = new BufferedWriter(Writer w);
+BufferedWriter bw = new BufferedWriter(Writer w , int buffersize);
+Note- BufferedWriter can't communicate directly with the file. It can communicate via Some Writer Object only.
+
+Example-
+import java.io.*;
+class BufferedWriterDemo
+{
+	public static void main(String[] args) throws IOException
+	{
+		FileWriter fw = new FileWriter("abc.txt");
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(100);
+		bw.newLine();
+		char[] ch = {'a','b','c','d'};
+		bw.write(ch);
+		bw.newLine();
+		bw.write("durga");
+		bw.newLine();
+		bw.write("Software Solutions");
+		bw.flush();
+		bw.close();
+	}
+}
+
+Output-
+d
+abcd
+durga
+Software Solutions
+
+*Buffered Reader
+We can use BufferedReader  to read character data(text data) from the file.
+The main advantage of BufferedReader over FileReader is we can read data line by line in addition to character to character,which is more convenient to the 
+programmer.
+
+Constructors-
+BufferedReader br = new BufferedReader(Reader r); 
+BufferedReader br = new BufferedReader(Reader r , int buffersize);
+
+Example-
+import java.io.*;
+class BufferedReaderDemo
+{
+	public static void main(String[] args) throws IOException
+	{
+		FileReader fr = new FileReader("abc.txt");
+		BufferedReader bw = new Bufferedreader(fr);
+		String line = br.readLine();
+		while(line != null)
+		{
+		   System.out.println(line);
+		   line = br.readLine();
+		}
+	br.close();
+	}
+}
+
+Output-
+d
+abcd
+durga
+Software Solutions
+
+
+Important-
+Scanner
+Printwriter
+InputStreamReader
+OutputStreamWriter
+
+
+		
+		
+
+
+
+		
