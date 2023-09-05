@@ -1,0 +1,77 @@
+Inside Process1 - three threads(t1,t2,t3) are getting executed
+Inside Process2 - two threads(t1,t2) are getting executed
+Inside Process3 - one threads(t1) are getting executed
+
+A thread is executed inside the process. There is context-switching between the threads. There 
+can be multiple process inside the OS, and one process can have multiple threads.
+Note- At a time one thread is executed only.
+
+Steps happen when we run program - 
+1. Start JVM
+2. create primary thread(main thread)
+3. locate class file
+4. load class
+5. start main execution.(loading and linking)
+6. unload class
+7. destroyed primary class
+8.shutdown JVM
+
+
+class Thread have run() and start() method
+run() - > It is an empty method
+
+interface Runnable{
+ public void run(); // This is abstract method.
+}
+ class Thread implements Runnable{
+	public void run(){
+	 // define some thread job
+	}
+	public void start(){
+	1. it perform some mandatory tasks - 
+	User defined thread association with JVM with help of Thread Scheduler will be done by this
+	 start() method and will generate thread stack
+	Thread creation or generation is done by calling start() method not by run() method.
+	2. and then it internally calls run method
+	}
+ }
+ 
+ 
+ Thread Life Cycle-
+ new state
+ runnable state
+ non runnable state
+ running state
+ terminate state
+ Whenever we create a Thread then it get initialize new state and then it goes to runnable 
+ state and when we pause somewhere in between runnable state then it is in non-runnable state
+ and after excution goes to terminate state.
+ 
+ 
+ Thread Scheduler role is to pick thread from runnable state and assign it to JVM then it is in
+ running state.
+ It is not mandatory for JVM to perform thread task immediately because it might be possible 
+ JVM is busy in performing other task.
+ 
+ Important methos in MultiThreading concept - 
+ run(), start(), getName(), setName()
+ join(), yield(), wait(), sleep(), notify()/notifyAll()
+ setDaemon(), isAlive()
+ 
+ How does sleep() method work internally?
+ Whenever we create a thread there is a monitor state, lock we call, so each thread acquire a 
+ lock for the resource, so if a resource is using a thread then that means resource is applying 
+ lock on this thread. sleep() is applied for a very small duration of time(milliseconds) so in 
+ this case thread will not release the lock of resource, it will just hold the resource on 
+ resource.
+ With sleep() method thread will hold the lock in monitor state.And again after sleep does not
+ get locking on resource then will throw InterruptedException.  
+ When we want to do something periodically(after milliseconds) then we can go for sleep().It is
+  always current thread thatis put to sleep.
+ 
+If multiple threads are running parellelly(t1,t2,t3,t4,t5), keep in mind 'at a moment only one
+thread will execute, even though all 5 threads running parallelly'.Remember sleep is called
+for current thread only.
+sleep() method always require time otherwise it will show compile time error.
+Nothing is going to change in Thread.sleep() whether you are using synchronization or 
+not-synchronization, it will behave same.

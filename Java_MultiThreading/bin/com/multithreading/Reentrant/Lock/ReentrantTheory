@@ -1,0 +1,59 @@
+
+Reentrant Lock
+Reenterant class is used to replace "synchronized" keyword.
+Reentrant class has methods lock() and unlock().Suppose in method(resource), thread entered now
+we want to lock particular part then we should use lock() method and after completion of 
+those task we can use unlock() method to release the lock.
+We should put unlock() method always in finally block because suppose a lock is applied and 
+exception is thrown, then all other waiting will not be able to get access. So when we put it 
+in finally block then it is always going to execute and release the lock.
+Note:-Reentrant lock allows you to call lock() method multiple times on the same object.
+
+Ex 1-
+private static ReentrantLock lock = new ReenterantLock();
+private static void accessResource(){
+	lock.lock();
+	try{
+		// m1(); -> access to resource, anything we can do here.
+	   }finally{
+	   lock.unlock();
+	   }
+}
+public void m1(){
+	System.out.println("Hello")
+}
+
+Ex 2-
+private static ReentrantLock lock = new ReenterantLock();
+private static void accessResource(){
+	lock.lock();
+	try{
+		// update shared resource
+		if(someCondition){
+			accessResource();
+		}
+	   lock.unlock();   
+}
+Note : In Example-2 we are calling accessResource() method again and again from inside lock() 
+through recursion.
+In this we can see
+Note:-Reentrant lock allows you to call lock() method multiple times on the same object. 
+youtube - https://www.youtube.com/watch?v=ahBC69_iyk4
+
+Ex 3-
+private static ReentrantLock lock = new ReenterantLock();
+private static void accessResource() throws InterruptedException{
+	boolean lockAcquired = lock.tryLock(timeout:5,TimeUnits.SECONDS);
+	if(lockAquired){
+		try{
+			// access resource
+		}finally{
+			lock.unlock();  
+		}
+	}else{
+	// do alternate stuff
+   }
+}
+Note : In example-3 first thread will try to make a lock and if it doesn't get lock then it 
+will move to 'else' part and will do other stuff.
+

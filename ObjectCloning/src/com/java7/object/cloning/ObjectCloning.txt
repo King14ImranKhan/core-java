@@ -1,0 +1,328 @@
+The process of creating exactly duplicate object is called cloning.The main purpose of cloning is to maintain back up copy and to preserve state of
+ an object.
+We can perform cloning by using clone() of Object class.
+
+protected native object clone() throws cloneNotSupportedException
+
+example
+
+class Test implements Cloneable
+{
+	int i=10;
+	int j=20;
+	public static void main(String[] args) throws CloneNotSupportedException
+	{
+		Test t1 = new Test();
+		Test t2 =(Test)t1.clone();
+		t2.i=888;
+		t2.j=999;
+		System.out.println(t1.i+"...."+t1.j);
+	}
+}
+
+Output-
+10 .... 20
+Note- Cloneable interface is Marker Interface.
+
+we can perform cloning only for Cloneable objects.An object is said to be cloneable if and only if the coreesponding class implements Cloneable
+ interface.
+Cloneable interface present in java.lang package and it doesn't contain any methods,It is a Marker Interface.If we are trying to perform cloning 
+for
+non-cloneable objects then we will get Run Time Exception saying CloneNotSupportedException.
+
+Cloning of an object can be obtained by two ways-
+1.Shallow cloning   2.Deep cloning
+
+Shallow Cloning
+The process of creating bitwise copy of an object is called Shallow cloning.
+If the main object contain primitive variables then exactly duplicate copies will be created in the cloned object.
+If the main object contain any reference variable then corresponding object wont be created just duplicate reference variable will be created 
+pointing to old contained object.
+Object class clone() method meant for Shallow cloning.
+In Shallow cloning by using cloned object reference if we perform any change to the contained object then those changes will be reflected to the 
+main object.To overcome this problem we should go for Deep cloning.
+
+Example-
+class Cat
+{
+	int j;
+	Cat(int j)
+	{
+		this.j=j;
+	}
+}
+class Dog implements Cloneable
+{
+	Cat c;
+	int i;
+	Dog(Cat c,int i)
+	{
+		this c=c;
+		this i=i;
+	}
+	public Object clone() throws cloneNotSupportedException
+	{
+		return super.clone();
+	}
+}
+class ShallowCloning
+{
+	public static void main(String[] args) throws CloneNotSupportedException
+	{
+		Cat c = new Cat(20);
+		Dog d1 = new Dog(c,10);
+		System.out.println(d1.i+"...."+d1.c.j);
+		Dog d2 = (Dog)d1.clone();
+		d2.i=888;
+		d2.c.j=999;
+		System.out.println(d1.i+"...."d1.c.j);
+	}
+} 
+
+Output:-
+10....20
+10....999	
+	
+
+Deep Cloning-
+The process of creating exactly duplicate independently copy including contained object is called Deep Cloning.
+In Deep cloning if the main object contain any primitive variables then in the cloned object duplicate copies will be created.
+If the main object contain any reference variable then the corresponding contained object will be also created in the cloned copy.
+By default object class clone method meant for shallow cloning but Programmer can implement Deep cloning explicitly by overriding clone method in 
+our class.
+By using Cloned Object reference if we perform any change to the contained object then those changes wont be reflected to the main object.
+
+Example-
+class Cat
+{
+	int j;
+	Cat(int j)
+	{
+		this.j = j;
+	}
+}
+class Dog implements Cloneable
+{
+	Cat c;
+	int i;
+	Dog(Cat c, int i)
+	{
+		this.c = c;
+		this i = i;
+	}
+	public Object clone() throws CloneNotSupportedException
+	{
+		Cat c1 = new Cat(c.j);
+		Dog d = new Dog(c1,i);
+		return d;
+	}
+}
+class DeepCloning
+{
+	public static void main(String[] args) throws CloneNotSupportedException
+	{
+		Cat c = new Cat(20);
+		Dog d1 = new Dog(c,10);
+		System.out.println(d1.i+"...."+d1.c.j);
+		Dog d2 = (Dog)d1.clone();
+		d2.i=888;
+		d2.c.j=999;
+		System.out.println(d1.i+"...."+d1.c.j);
+	}
+}
+Output-
+10....20
+10....20
+
+
+
+Static vs Final
+241
+
+The static keyword can be used in 4 scenarios
+static variables
+static methods
+static blocks of code
+static nested class
+Let's look at static variables and static methods first.
+
+Static variable
+It is a variable which belongs to the class and not to object (instance).
+Static variables are initialized only once, at the start of the execution. These variables will be initialized first, before the initialization of 
+any instance 
+variables.
+A single copy to be shared by all instances of the class.
+A static variable can be accessed directly by the class name and doesn’t need any object.
+Syntax: Class.variable
+Static method
+It is a method which belongs to the class and not to the object (instance).
+A static method can access only static data. It can not access non-static data (instance variables) unless it has/creates an instance of the class.
+A static method can call only other static methods and can not call a non-static method from it unless it has/creates an instance of the class.
+A static method can be accessed directly by the class name and doesn’t need any object.
+Syntax: Class.methodName()
+A static method cannot refer to this or super keywords in anyway.
+Static class
+Java also has "static nested classes". A static nested class is just one which doesn't implicitly have a reference to an instance of the outer
+ class.
+
+Static nested classes can have instance methods and static methods.
+
+There's no such thing as a top-level static class in Java.
+
+Side note:
+main method is static since it must be be accessible for an application to run before any instantiation takes place.
+
+final keyword is used in several different contexts to define an entity which cannot later be changed.
+A final class cannot be subclassed. This is done for reasons of security and efficiency. Accordingly, many of the Java standard library classes are
+final, for example java.lang.System and java.lang.String. All methods in a final class are implicitly final.
+
+A final method can't be overridden by subclasses. This is used to prevent unexpected behavior from a subclass altering a method that may be crucial
+ to the function or consistency of the class.
+
+A final variable can only be initialized once, either via an initializer or an assignment statement. It does not need to be initialized at the 
+point of declaration:
+this is called a blank final variable. A blank final instance variable of a class must be definitely assigned at the end of every constructor of 
+the class in which it is declared; similarly, a blank final static variable must be definitely assigned in a static initializer of the class in 
+which it is declared; otherwise, a compile-time error occurs in both cases.
+
+Note: If the variable is a reference, this means that the variable cannot be re-bound to reference another object. But the object that it references
+is still mutable, if it was originally mutable.
+When an anonymous inner class is defined within the body of a method, all variables declared final in the scope of that method are accessible from 
+within the inner class. Once it has been assigned, the value of the final variable cannot change.  
+
+
+Instance vs Local variable
+ Local variables are visible only in the method or block they are declared whereas instance variables can been seen by all methods in the class. 
+ Place where they are declared: Local variables are declared inside a method or a block whereas instance variables inside a class but outside a 
+ method.
+
+
+                    <----------Access Modifiers in Java------------->
+There are two types of modifiers in Java: access modifiers and non-access modifiers.
+
+The access modifiers in Java specifies the accessibility or scope of a field, method, constructor, or class. We can change the access level of fields, constructors, 
+methods, and class by applying the access modifier on it.
+
+There are four types of Java access modifiers:
+Private: The access level of a private modifier is only within the class. It cannot be accessed from outside the class.
+Default: The access level of a default modifier is only within the package. It cannot be accessed from outside the package. If you do not specify
+ any access level, it will be the default.
+Protected: The access level of a protected modifier is within the package and outside the package through child class. If you do not make the child
+class, it cannot be accessed from outside the package.
+Public: The access level of a public modifier is everywhere. It can be accessed from within the class, outside the class, within the package and 
+outside the package.There are many non-access modifiers, such as static, abstract, synchronized, native, volatile, transient, etc. Here, we are 
+going to learn the access modifiers only.
+
+
+       <----------------Wrapper Classes in Java------------------>
+
+A Wrapper class is a class whose object wraps or contains primitive data types. When we create an object to a wrapper class, it contains a field 
+and in this field, we can store primitive data types. In other words, we can wrap a primitive value into a wrapper class object.
+
+Need of Wrapper Classes
+
+They convert primitive data types into objects. Objects are needed if we wish to modify the arguments passed into a method (because primitive types 
+are passed by value).
+The classes in java.util package handles only objects and hence wrapper classes help in this case also.
+Data structures in the Collection framework, such as ArrayList and Vector, store only objects (reference types) and not primitive types.
+An object is needed to support synchronization in multithreading.
+
+Primitive data type                           Wrapper class
+char						Character
+int						Integer
+byte						Byte
+short						Short
+float						Float
+long 						Long
+double						Double
+
+Autoboxing: Automatic conversion of primitive types to the object of their corresponding wrapper classes is known as autoboxing. For example – 
+conversion of int to Integer, long to Long, double to Double etc.
+Example-
+import java.util.ArrayList; 
+class Autoboxing 
+{ 
+    public static void main(String[] args) 
+    { 
+        char ch = 'a'; 
+  
+        // Autoboxing- primitive to Character object conversion 
+        Character a = ch; 
+  
+        ArrayList<Integer> arrayList = new ArrayList<Integer>(); 
+  
+        // Autoboxing because ArrayList stores only objects 
+        arrayList.add(25); 
+  
+        // printing the values from object 
+        System.out.println(arrayList.get(0)); 
+    } 
+} 
+
+Unboxing: It is just the reverse process of autoboxing. Automatically converting an object of a wrapper class to its corresponding primitive type 
+is known as unboxing. For example – conversion of Integer to int, Long to long, Double to double, etc.
+Example
+import java.util.ArrayList; 
+  
+class Unboxing 
+{ 
+    public static void main(String[] args) 
+    { 
+        Character ch = 'a'; 
+  
+        // unboxing - Character object to primitive conversion 
+        char a = ch; 
+  
+        ArrayList<Integer> arrayList = new ArrayList<Integer>(); 
+        arrayList.add(24); 
+  
+        // unboxing because get method returns an Integer object 
+        int num = arrayList.get(0); 
+  
+        // printing the values from primitive data types 
+        System.out.println(num); 
+    } 
+} 
+
+
+Java Type Casting
+Type casting is when you assign a value of one primitive data type to another type.
+
+In Java, there are two types of casting:
+
+Widening Casting (automatically) - converting a smaller type to a larger type size
+byte -> short -> char -> int -> long -> float -> double
+
+Narrowing Casting (manually) - converting a larger type to a smaller size type
+double -> float -> long -> int -> char -> short -> byte
+
+
+Widening Casting
+Widening casting is done automatically when passing a smaller size type to a larger size type:
+
+
+Example
+public class MyClass {
+  public static void main(String[] args) {
+    int myInt = 9;
+    double myDouble = myInt; // Automatic casting: int to double
+
+    System.out.println(myInt);      // Outputs 9
+    System.out.println(myDouble);   // Outputs 9.0
+  }
+}
+
+
+Narrowing Casting
+Narrowing casting must be done manually by placing the type in parentheses in front of the value:
+
+Example
+public class MyClass {
+  public static void main(String[] args) {
+    double myDouble = 9.78;
+    int myInt = (int) myDouble; // Manual casting: double to int
+
+    System.out.println(myDouble);   // Outputs 9.78
+    System.out.println(myInt);      // Outputs 9
+  }
+}

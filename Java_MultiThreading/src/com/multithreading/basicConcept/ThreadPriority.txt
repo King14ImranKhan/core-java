@@ -1,0 +1,74 @@
+Thread Priority:-
+
+In multi-threaded applications, each thread is assigned with a priority. The processor is assigned to the thread by the thread scheduler based on its priority i.e.
+ the highest priority thread is assigned the processor first and so on. The default priority of a thread with a value of '5'. We can get the priority of a thread 
+using the getPriority() method of Thread class.
+
+The three static values defined in the Thread class for the priority of a thread
+
+MAX_PRIORITY
+This is the maximum thread priority with a value of 10.
+
+NORM_PRIORITY
+This is the default thread priority with a value of 5.
+
+MIN_PRIORITY
+This is the minimum thread priority with a value of 1.
+
+Syntax
+public final int getPriority()
+Example
+public class ThreadPriorityTest extends Thread {
+   public static void main(String[]args) {
+      ThreadPriorityTest thread1 = new ThreadPriorityTest();
+      ThreadPriorityTest thread2 = new ThreadPriorityTest();
+      ThreadPriorityTest thread3 = new ThreadPriorityTest();
+      System.out.println("Default thread priority of thread1: " + thread1.getPriority());
+      System.out.println("Default thread priority of thread2: " + thread2.getPriority());
+      System.out.println("Default thread priority of thread3: " + thread3.getPriority());
+      thread1.setPriority(8);
+      thread2.setPriority(3);
+      thread3.setPriority(6);
+      System.out.println("New thread priority of thread1: " + thread1.getPriority());
+      System.out.println("New thread priority of thread2: " + thread2.getPriority());
+      System.out.println("New thread priority of thread3: " + thread3.getPriority());
+   }
+}
+Output
+Default thread priority of thread1: 5
+Default thread priority of thread2: 5
+Default thread priority of thread3: 5
+New thread priority of thread1: 8
+New thread priority of thread2: 3
+New thread priority of thread3: 6
+
+
+3 constants defined in Thread class:
+public static int MIN_PRIORITY
+public static int NORM_PRIORITY
+public static int MAX_PRIORITY
+
+Example-
+class TestMultiPriority1 extends Thread{  
+ public void run(){  
+   System.out.println("running thread name is:"+Thread.currentThread().getName());  
+   System.out.println("running thread priority is:"+Thread.currentThread().getPriority());  
+  
+  }  
+ public static void main(String args[]){  
+  TestMultiPriority1 m1=new TestMultiPriority1();  
+  TestMultiPriority1 m2=new TestMultiPriority1();  
+  m1.setPriority(Thread.MIN_PRIORITY);  
+  m2.setPriority(Thread.MAX_PRIORITY);  
+  m1.start();  
+  m2.start();  
+   
+ }  
+}     
+
+Output-
+Output:running thread name is:Thread-0
+       running thread priority is:10
+       running thread name is:Thread-1
+       running thread priority is:1
+       

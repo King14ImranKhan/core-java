@@ -1,0 +1,128 @@
+A thread is automatically destroyed when the run() method has completed. But it might be 
+required to kill/stop a thread before it has completed its life cycle. 
+Previously, methods suspend(), resume() and stop() were used to manage the execution of 
+threads. But these methods were deprecated by Java 2 because they could result
+ in system failures. Modern ways to suspend/stop a thread are by using a boolean flag and 
+ Thread.interrupt() method.
+1.Using a boolean flag: We can define a boolean variable which is used for stopping/killing 
+threads say exit. Whenever we want to stop a thread, the ‘exit’ variable 
+will be set to true.
+Example-
+
+class MyThread implements Runnable { 
+  
+    // to stop the thread 
+    private boolean exit; 
+  
+    private String name; 
+    Thread t; 
+  
+    MyThread(String threadname) 
+    { 
+        name = threadname; 
+        t = new Thread(this, name); 
+        System.out.println("New thread: " + t); 
+        exit = false; 
+        t.start(); // Starting the thread 
+    } 
+  
+    // execution of thread starts from run() method 
+    public void run() 
+    { 
+        int i = 0; 
+        while (!exit) { 
+            System.out.println(name + ": " + i); 
+            i++; 
+            try { 
+                Thread.sleep(100); 
+            } 
+            catch (InterruptedException e) { 
+                System.out.println("Caught:" + e); 
+            } 
+        } 
+        System.out.println(name + " Stopped."); 
+    } 
+  
+    // for stopping the thread 
+    public void stop() 
+    { 
+        exit = true; 
+    } 
+} 
+  
+// Main class 
+public class Main { 
+    public static void main(String args[]) 
+    { 
+        // creating two objects t1 & t2 of MyThread 
+        MyThread t1 = new MyThread("First  thread"); 
+        MyThread t2 = new MyThread("Second thread"); 
+        try { 
+            Thread.sleep(500); 
+            t1.stop(); // stopping thread t1 
+            t2.stop(); // stopping thread t2 
+            Thread.sleep(500); 
+        } 
+        catch (InterruptedException e) { 
+            System.out.println("Caught:" + e); 
+        } 
+        System.out.println("Exiting the main Thread"); 
+    } 
+} 
+
+2.Using Thread.interrupt() method: Whenever an interrupt has been sent to a thread, it should 
+stop whatever task it is performing. It is very likely that whenever 
+the thread receives an interrupt, it is to be terminated. This action can be done by using
+ the interrupt() method. Whenever Thread.interrput() is called, it sets a 
+flag known as the interrupt status to true. This means that the thread has to stop performing 
+further execution. The default value of this flag is false.
+Example-
+
+// Java program to illustrate 
+// stopping a thread 
+// using the interrupt() method 
+  
+class MyThread implements Runnable { 
+  
+    Thread t; 
+  
+    MyThread() 
+    { 
+        t = new Thread(this); 
+        System.out.println("New thread: " + t); 
+        t.start(); // Starting the thread 
+    } 
+  
+    // execution of thread starts from run() method 
+    public void run() 
+    { 
+        while (!Thread.interrupted()) { 
+            System.out.println("Thread is running"); 
+        } 
+        System.out.println("Thread has stopped."); 
+    } 
+} 
+  
+// Main class 
+public class Main { 
+    public static void main(String args[]) 
+    { 
+        // creating objects t1 of MyThread 
+        MyThread t1 = new MyThread(); 
+  
+        try { 
+            Thread.sleep(1); 
+  
+            // t1 is an object of MyThread 
+            // which has an object t 
+            // which is of type Thread 
+            t1.t.interrupt(); 
+  
+            Thread.sleep(5); 
+        } 
+        catch (InterruptedException e) { 
+            System.out.println("Caught:" + e); 
+        } 
+        System.out.println("Exiting the main Thread"); 
+    } 
+} 

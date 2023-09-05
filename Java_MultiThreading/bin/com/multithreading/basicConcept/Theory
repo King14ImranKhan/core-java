@@ -1,0 +1,33 @@
+https://www.youtube.com/watch?v=DTkw1Jq_1Ts&list=PLlhM4lkb2sEh1pBs0KBb63PlKKqRx6M1a
+
+
+->Thread class have constructors, methods,run(),start().
+->Thread class implements Runnable interface so in Thread class also we can use run() because it is overridden
+in Thread class.
+
+MultiTasking-->
+Performing multiple task at single time. like cpu have os and on os we can run vlc,wordpad,musicplayer etc at 
+same time.
+
+Multitasking can be acheived by two ways -
+(Process Based Multitasking)Multiprocessing - If a system connected with multiple processor(CPU)
+(Thread based Multitasking)Multithreading -
+
+
+Inter-thread communication is a mechanism in which a thread releases the lock and enter into paused state and
+another thread acquires a lock and continue to executed.
+It is implemented by following methods of Object class
+1.wait() - If any thread calls the wait() method, it causes the current thread to release the lock and wait until another thread invokes the
+		notify() or notifyAll() method for this object, or a specified amount of time elapsed.
+		Syntax- public final void wait() throws InterruptedException(wait until the object is notified)
+		public final void wait(long timeout) throws InterruptedException(wait for the specified amount of time)
+2.notify() - This method is used to wake up a single thread and releases the object lock.
+		Syntax - public final void notify()
+3.notifyAll() - This method is used wake up all threads that are in waiting state.
+		Syntax- public void fina notifyAll()
+		
+Note - To call wait(), notify() or notifyAll() method on any object, thread should own the lock of that object i.e the thread should be inside
+		synchronized area.
+		
+yield() - yield method causes to pass current executing thread to give the chance for waiting threads of same priority. If there is no waiting 
+			thread or all waiting thread have low priority then same thread can continue its execution.

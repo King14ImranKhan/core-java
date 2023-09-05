@@ -1,0 +1,15 @@
+Object level Lock(Instance Lock)
+This is the mechanism when we want to synchronize the non-static method or non-static code 
+block such that only one thread will be able to execute the code block on given instance of the 
+class.
+Object level lock should alwayz be done to make instance level data Thread safe. 
+
+Class Level Lock
+Class Level Lock prevents multiple threads to enter in synchronized block in any of all the 
+available instances of the class on run time.
+Example : If the runtime has 100 instances of the class then only one thread will be able to 
+execute the synchronized method in any of the instance at a time and all other instances will 
+be locked for other threads.
+This class level lock should always be done to make static data thread safe.
+It is possible that both static synchronized and non-static synchronized method can run 
+simultaneously because they acquire the different locks.

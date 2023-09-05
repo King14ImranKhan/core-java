@@ -1,0 +1,91 @@
+
+Join() method
+In Multithreading Main method thread will complete first always, but sometime we don't want main
+thread to complete first then we can go for join() method.
+
+yield() method
+When we are running threads. They will run with some priority
+->priority 
+1== Minimal Priority
+5==Normal Priority
+10==High Priority
+some threads will have low priority and by default they will be present. Those are called 
+Daemon thread. Example : Garbage Collector is low priority thread.
+When threads are in waiting state let say runnable or in hold state
+waiting - t1(5) t2(5) t3(10) t4(1)
+suppose t1 thread is running and we called yield() method now JVM will find all waiting threads 
+and will check here we can see t2 is also having same priority then JVM will give chance to t2 
+thread because both t1 and t2 have same priority.
+
+Use of yield() method
+Whenever a thread call java.lang.Thread.yield() method, it gives hint to the thread scheduler 
+that it is ready to pause its execution. Thread scheduler is free to ignore this hint.
+If any thread executes yield() method, thread scheduler checks if there is any thread with same
+priority or high priority than this thread.If processor finds any thread with higher or same
+priority then it will move the current thread to Ready/Runnable state and give processor to
+other thread and if not - current thread will keep executing. 
+
+
+wait(),notify() and notifyAll() belongs to object class. These three methods are used for inter
+ thread communication.
+If these three methods are used for inter thread communication then why these methos are kept 
+in Object class and not in Thread class?
+wait() notify() and notifyAll() are not just normal methods, as these are the methods which we
+ use for communication purpose.
+ 
+ 
+ Sleep() vs Wait()
+sleep() is a method which is used to pause the process for few seconds or the time we want to.
+ But in case of wait() method, thread goes in waiting state and it won't
+ come back automatically until we call the notify() or notifyAll().
+
+The major difference is that wait() releases the lock or monitor while sleep() doesn't releases 
+the lock or monitor while waiting. wait() is used for inter-thread
+ communication while sleep() is used to introduce pause on execution and it holds the lock, 
+ generally.
+
+
+Important Knowledge to use wait and notify:-
+synchronized keyword is used for exclusive accessing.
+To make a method synchronized, simply add the synchronized keyword to its declaration. Then no
+ two invocations of synchronized methods on the same object can 
+interleave with each other.
+Synchronized statements must specify the object that provides the intrinsic lock. When
+ synchronized(this) is used, you have to avoid to synchronizing invocations of
+ other objects' methods.
+wait() tells the calling thread to give up the monitor and go to sleep until some other thread
+ enters the same monitor and calls notify( ).
+notify() wakes up the first thread that called wait() on the same object.
+class ThreadB extends Thread{
+    int total;
+    @Override
+    public void run(){
+        synchronized(this){
+            for(int i=0; i<10 ; i++){
+               System.out.println(i);
+		total += i;
+            }
+            notify();
+		System.out.println("Hello notify");
+	
+        }
+    }
+}
+public class WaitNotifyThread {
+    public static void main(String[] args){
+        ThreadB b = new ThreadB();
+        b.start();
+ 
+        synchronized(b){
+            try{
+                System.out.println("Waiting for b to complete...");
+                b.wait();
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+ 
+            System.out.println("Total is: " + b.total);
+        }
+    }
+}
+

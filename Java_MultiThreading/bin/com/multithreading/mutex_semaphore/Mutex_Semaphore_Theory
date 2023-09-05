@@ -1,0 +1,20 @@
+Mutex
+Let's assume toilet has key and a person who is having key can enter into the toilet.
+Other persons will be waiting outside toilet. 
+Now a person will give it's key to the next person and next person will enter into toilet.
+A Mutex Object only allows one thread to make lock with resource, forcing other threads which
+attempt to gain access to that section of resource to wait until the first thread has exited 
+from that section(release the lock).
+Mutex is a object owned by thread, so there is ownership in mutex. Mutex allow only one thread
+to access resource.
+
+Semphore
+Let's assume we have 4 toilet and 4 identical keys for them. Any key can be used in any toilet.
+Suppose total persons we are having is 5.And now 4 persons are using toilets and 1 person is 
+left who is not having key then he has to wait.
+A semaphore restricts  the number of simulataneous users of a shared resource up to a maximum
+number. Threads can request access to the resource(decrementing the semaphore), and signal 
+that they have finished using resource(incrementing the semaphore).
+Semaphore is a signalling mechanism. It allows a limit  number of thread to access shared 
+resource.
+
