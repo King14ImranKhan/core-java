@@ -1,0 +1,66 @@
+
+In java-11 jre got removed and introduced jmod
+java-11  - It generates byte codes but after executing class file it is deleting bytecode. Now in Java-11 byte code is not
+accessible to us.
+Java follow write once and run anywhere.
+At first time only if we do 'java FileName.java' then will run but will not create .class file.
+but if we want then we can do 'javac FileName.java' then it will create .class file
+
+Important feature -
+1. Single command to run
+2. Module 
+3. JShell
+
+JShell 
+It is present inside 
+jdk11/bin
+
+JShell takes single user input/expression/no of lines, it evaluate and return result. So we don't need to write full programs.
+Example - 
+jshell> System.out.print("hello");
+hello
+
+jshell> String s="hello";
+s ==>"Hello"
+
+jshell> "hello"
+$5 ==> "hello"
+
+Module 
+Module is group of packages.
+It is most important feature of java which helps in reusability, it allows us to reuse the classes that we have created with the help of inheritance and
+interfaces.
+We can inherit behaviour of a class with the help of inheritance and can inherit the abstraction using interfaces.
+To reuse these classes efficiently java has grouped them in packages and it is done in such a way so that similar type of classes are in a single package.
+For e.g when we are working on collections, most of the classes and interfaces that we need are in java.util package.
+Over time as our code size increased, the package in java also got increased. Imagine working on a very large program using hundreds of packages, in such
+case it is very difficult to understand which classes is using what package. Packages are great way of organizing classes but there needs to be way to organize 
+packages when we need to use several of them in our code.
+ 
+Also, the only way to make a class reusable between packages is to make it public and when we make it public it can be used by anyone. Java 9 introduced
+a cool new feature to solve that we discussed above. It introduced a new feature called "Module". A Module is a set of packages. A module not only
+organizes packages, it also take care of the accessibility so that the part of the module that we want to be reused, can be used and the part that we
+don't want to be reused, can't be reused.
+
+What is Java 9 module?
+A module is a set of packages. We have two types of packages in a module -
+1. Export packages
+2. Concealed packages
+
+Exported Packages
+These packages are intended to be used outside of the module, which means any program residing in any other module can use these packages.
+
+Concealed Packages
+These packages are not intended to be used outside the module, they are internal to the module and can be used inside the module only.
+
+Exported package example -
+module java.base{
+ exports java.io;
+ exports java.time;
+ exports java.util;
+}
+
+other than these packages will be considered as concealed packages
+
+
+

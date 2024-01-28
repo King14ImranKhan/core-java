@@ -1,0 +1,100 @@
+Thread Scheduler
+Thread Scheduler in java is the part of the JVM that decides which thread should run.
+There is no guarantee that which runnable thread will be chosen to run by the thread scheduler.
+
+A thread is executed inside the process. There is context switching between the threads. There can be multiple 
+processes inside the OS, and one process can have multiple threads.
+
+Note- At a time one thread is executed only.
+
+Life Cycle of a Thread,
+A thread can be in one of the five states. According to sun, there is on 4 states in thread life cycle in java
+new,
+runnable,
+non-runnable,
+terminated
+There is no running state.
+
+But for better understanding the threads, we are explaining it in the 5.
+
+*Mandatory operation of start() method
+Inside JVM there is one additional Utility available which we call Thread Scheduler.
+Thread Scheduler responsible for scheduling thread and assigning it to  JVM to execute.
+
+Suppose we have created multiple thread and calling start() method then before calling run() method
+then it is in runnable state and ready to execute (run() going to execute).
+
+Here the threads when we create then there is requirement of notifying thread scheduler to execute these
+threads. So here I can say there is some kind of registery or association happens between created Threads
+and Thread Scheduler that these threads must be picked from the pool where all threads are ready to execute and
+so it should assigned to JVM to execute it. 
+
+When association happens  separate thread stack will get created in Thread Stack memory of JVM internally before 
+calling run() method.
+Now when thread stack got created then after it calls run() method.
+Thread scheduler will pick up from Runnable state and assign that to JVM to execute that. Now run() will run that is
+running state.
+
+Note- Creation of thread stack happens when we call start() method
+
+join() -> waits for a thread to die
+join(1000) -> waits for a thread to die for the specified millisecond
+yield() -> causes the currently running executing thread object to temporarily pause and allow other thread
+to execute.
+
+interrupt() -> It is used to interrupt thread.
+
+--> Daoemon thread is low priority thread which works in back ground like garbage collector.
+
+----------Thread Priority ------------
+ There are three types of priority-
+ Min
+ Normal
+ Max
+ Thread with high priority will execute first , will be picked by Thread scheduler.
+ 
+ Suppose there are 3 thread t1,t2,t3 and t1 has 10 priority and t3 also has 10 priority and t2 has 5 priority.
+ Currently lets assume t1 is getting executed and suddenly you called for yield() method.
+ What will happen?
+ Now JVM will check is there any thread with same priority then it will see t3 is of same priority then it will
+ stop t1 execution here and will pick t3 thread for execution.
+ So yield() method gives chance to execute waiting thread with same priority.
+ 
+ 
+ 
+ java.lang.Object
+ wait()
+ notify()
+ notifyAll()
+  
+ All above methods are used for inter thread communication
+ wait() -> to put a thread in non runnable state. And will be in that state until notify or notifyall
+ 
+ Why wait,notify,notifyAll method in Object class not in Thread class?
+ 
+ 
+ 
+ 
+ 
+ Object level Lock vs class Level Lock
+ 
+ Object Level Lock
+Scope: Object-level locks are applied to individual objects or instances of a class.
+Usage: When multiple threads are working with different instances of a class, each instance can have its own lock.
+       This allows multiple threads to work on different objects simultaneously without interference.
+Granularity: The granularity of locking is fine-grained, meaning that only the specific object on which the lock is
+       acquired is protected from concurrent access.
+       
+Class Level Lock
+Scope: Class-level locks are applied to the entire class, not individual objects. All instances of the class share 
+       the same lock.
+Usage: When multiple threads are working with instances of a class and the operations need to be synchronized at the
+       class level, a class-level lock can be used. This means that only one thread can execute any synchronized 
+       method of the class at a time, regardless of the instance.
+     
+
+
+
+
+
+ 
