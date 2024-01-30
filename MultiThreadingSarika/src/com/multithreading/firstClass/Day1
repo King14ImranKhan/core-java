@@ -76,9 +76,9 @@ interrupt() -> It is used to interrupt thread.
  
  
  
- Object level Lock vs class Level Lock
+Object level Lock vs class Level Lock
  
- Object Level Lock
+Object Level Lock
 Scope: Object-level locks are applied to individual objects or instances of a class.
 Usage: When multiple threads are working with different instances of a class, each instance can have its own lock.
        This allows multiple threads to work on different objects simultaneously without interference.

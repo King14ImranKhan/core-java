@@ -1,0 +1,42 @@
+Question
+a1b2c3...z26
+Print this with the help of two threads by using wait and notify.
+
+Java Thread Pool
+Java thread pool represents a group of worker thread that are waiting for the job and reuse many times.
+In case of thread pool, a group of fixed size threads are created. A thread from thread pool is pulled 
+out and assigned a job by the service provider. After completion of the job, thread is contained in the
+thread pool again.
+
+Advantages of Java Thread Pool
+Better performance, it saves time because there is no need to create new thread.
+
+Check site - https://ocpj8.javastudyguide.com/ch26.html
+Executor Service
+Java 5 introduced a high-level API for concurrency, most of it implemented in the java.util.concurrent package.
+One of the features of this API is the Executor interfaces that provide an alternative(better) way to launch 
+and manage threads.
+
+
+
+Executor
+This interface has the execute() method, which is designed to replace:
+Runnable r = ...
+Thread t = new Thread(r);
+t.start();
+
+With:
+
+Runnable r = ...
+Executor e = ...
+e.execute(r); 
+
+*ExecutorService
+This interface extends Executor to provide more features, like the submit() method that accepts Runnable and 
+Callable objects and allows them to return a value.
+
+learn about CountDownLatch and Cyclic Barrier from https://ocpj8.javastudyguide.com/ch26.html
+
+
+*ScheduledExecutorService
+This interface extends ExecutorService to execute tasks at repeated intervals or with a particular delay.
