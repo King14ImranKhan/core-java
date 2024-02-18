@@ -1,0 +1,141 @@
+In jdk 5 one high level API was introduced for concurrency and there is one interface introduced that is
+Executor and this has a method which is called execute().
+This Executor provide better or alternative way of launch/create and manage threads.
+We have one class inherited from Executor is ExecutorService.
+This ExecutorService provide more method for thread execution and here we have one more additional method
+called submit() and it allows me to execute Runnable/ Callable task.
+
+How it provide better or alternative way of launch/create and manage threads?
+So for this we can say there is concept of Thread Pool.
+ThreadPool- It is a group of worker threads which is reusable.
+Suppose some worker threads are running and we want to send them back to ThreadPool then we can do it 
+by calling shutdown() or shutDownNow() methods.
+
+Suppose some of worker thread are running and performing some task and due to some few of them got stopped or
+terminated then ExecutorService have capability to create new thread and complete those pending tasks.
+This is the special behavior of ExecutorService.
+but ExecuteService role is responsible for execution of the thread then How Thread Pool will get created then
+neither Executors nor ExecutorService. These two are nor able to create ThreadPool.
+To create Thread Pool we have Executor class and it has some static methods.
+newFixedThreadPool(5)
+newSingleThreadExecutor()
+etc..
+
+Ques- You have 20000 tasks, and 4 threads is there, 1 thread can perform 50 task at a time. So after doing 200
+task by four thread. I want to check first is any problem with that 200 task or not. If there is no problem then
+will start execution of next 200 task.
+Answer - I can be achieved through CyclicBarrier and with Countdown Latch as well as with ExecutorService.
+But ExecutorService is better answer among all.
+Through CyclicBarrier we can check is all task executed previously or not by all four above threads
+CyclicBarrier is a point where all thread meets after completion of their tasks and there we can check.
+
+What is CyclicBarrier and CountDownLatch?
+What is segment and id in Kafka?
+If thread shared a same task and other thread know this much part of task is completed and please take rest of
+task?
+
+AtomicInteger
+ReEntrant Lock
+DeadLock
+Semaphore
+Volatile keyword Example.
+yield();
+
+
+Synchronization in multithreading refers to the coordination or control of access to shared resources to avoid 
+conflicts and maintain consistency in a concurrent program. There are several mechanisms for synchronization in 
+Java:
+
+Synchronized Methods:
+
+In Java, you can use the synchronized keyword to make a method synchronized. When a thread invokes a synchronized
+ method, it automatically acquires the lock for the object on which the method is called. Other threads attempting 
+ to invoke synchronized methods on the same object are blocked until the lock is released.
+java
+Copy code
+public synchronized void synchronizedMethod() {
+    // Code that needs to be synchronized
+}
+Synchronized Blocks:
+
+Instead of synchronizing entire methods, you can use synchronized blocks to protect critical sections of code 
+within a method. This allows for more fine-grained control over synchronization.
+java
+Copy code
+public void someMethod() {
+    // Non-critical section code
+
+    synchronized (lockObject) {
+        // Critical section code
+    }
+
+    // Non-critical section code
+}
+Locks (ReentrantLock):
+
+The ReentrantLock class in the java.util.concurrent.locks package provides an alternative to the synchronized
+ keyword. It offers more flexibility, allowing for finer-grained control over locking and provides additional 
+ features like fairness policies, lock timeouts, and condition variables.
+java
+Copy code
+ReentrantLock lock = new ReentrantLock();
+
+public void someMethod() {
+    lock.lock();
+    try {
+        // Critical section code
+    } finally {
+        lock.unlock();
+    }
+}
+Volatile Keyword:
+
+The volatile keyword is used for variables that are shared among multiple threads. It ensures that changes made by
+ one thread to a volatile variable are immediately visible to other threads. However, it does not provide atomicity 
+ for compound operations.
+java
+Copy code
+private volatile int sharedVariable;
+Atomic Classes:
+
+Java provides atomic classes in the java.util.concurrent.atomic package (e.g., AtomicInteger, AtomicLong). These 
+classes provide atomic operations and eliminate the need for explicit locking in certain scenarios.
+java
+Copy code
+AtomicInteger atomicInt = new AtomicInteger();
+
+public void increment() {
+    atomicInt.incrementAndGet();
+}
+CountDownLatch:
+
+The CountDownLatch class is a synchronization aid that allows one or more threads to wait until a set of operations
+being performed in other threads completes. It's often used to coordinate the startup of multiple threads.
+java
+Copy code
+CountDownLatch latch = new CountDownLatch(1);
+
+// Thread 1
+latch.countDown();
+
+// Thread 2
+latch.await();
+CyclicBarrier:
+
+The CyclicBarrier class is another synchronization aid that allows a set of threads to wait for each other to reach
+a common barrier point. Once all threads have reached the barrier, they are released to continue their execution.
+java
+Copy code
+CyclicBarrier barrier = new CyclicBarrier(3);
+
+// Threads 1, 2, and 3
+barrier.await();
+These synchronization mechanisms play a crucial role in preventing race conditions, deadlocks, and other
+concurrency-related issues in multithreaded programs. The choice of synchronization technique depends on the
+specific requirements and characteristics of the program.
+
+  
+
+
+
+
